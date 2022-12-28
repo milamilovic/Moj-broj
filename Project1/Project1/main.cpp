@@ -30,17 +30,20 @@ int main() {
 	ifstream in(ime_fajla);
 	while (!in)
 	{
-		cout << "Unesite ime ulaznog fajla: " << endl;
-		cin >> ime_fajla;
 		if (ime_fajla != "") {
 			cerr << "GRESKA: pogresno ime ulaznog fajla!";
 		}
+		cout << "Unesite ime ulaznog fajla: " << endl;
+		cin >> ime_fajla;
 	}
 	
 	bool igracA = true;
 	string unos_igracA = "";
 	string unos_igracB = "";
 	int broj_runde = 1;
+	ofstream fajl_rezultati("Rezultati.txt");
+	int broj_pobedaA = 0;
+	int broj_pobedaB = 0;
 
 	//svaka iteracija ove while petlje u stvari predstavlja jednu rundu igre
 	while (!in.eof())
@@ -50,8 +53,10 @@ int main() {
 		getline(in, red);
 		vector<string> reci = split(red);
 		cout << "Brojevi koji se koriste:" << endl;
+		string dostupni_brojevi = "";
 		for (int i = 0; i < reci.size() - 1; i++) {
 			cout << reci.at(i) << '\n';
+			dostupni_brojevi += reci.at(i);
 		}
 		cout << "Trazeni broj: " << reci.at(reci.size() - 1) << endl << endl;
 
@@ -71,6 +76,33 @@ int main() {
 
 		//evaluacija unosa
 		//to i split mozda treba u poseban cpp i h
+		int vrednostA = 1;
+		int vrednostB = 2;
+
+		//pronalazak tacnog(najblizeg) resenja
+		string resenje = red;
+		int vrednostK = 3;
+
+		//provera ko je blizi i upisivanje u fajl
+		string pobednik = "";
+		if (abs(stoi(reci.at(reci.size() - 1)) - vrednostA) < abs(stoi(reci.at(reci.size() - 1)) - vrednostB)) {
+			pobednik += "igrac A";
+			broj_pobedaA++;
+		}
+		else {
+			 pobednik += "igrac B";
+			 broj_pobedaB++;
+		}
+		string upis = "Broj runde: " + to_string(broj_runde) + "/nDostupni podaci: " + dostupni_brojevi;
+		upis += "\nTrazeni broj: " + reci.at(reci.size() - 1);
+		upis += "\nIgrac A je dobio vrednost " + to_string(vrednostA) + " koja odsutpa od trazenog za " + to_string(abs(stoi(reci.at(reci.size() - 1)) - vrednostA));
+		upis += "\nIgrac B je dobio vrednost " + to_string(vrednostB) + " koja odsutpa od trazenog za " + to_string(abs(stoi(reci.at(reci.size() - 1)) - vrednostB));
+		upis += "\nIzraz igraca A je " + unos_igracA;
+		upis += "\nIzraz igraca B je " + unos_igracB;
+		upis += "\nRundu je dobio " + pobednik;
+		upis += "\nIzraz koji je kompjuter dobio je " + resenje;
+		upis += "\nVrednost resenja koje je dobio kompjuter je " + to_string(vrednostK) + "/n/n/n";
+		fajl_rezultati << upis;
 
 		//podesavanje promenljivih za sledecu rundu
 		if (igracA) {
@@ -81,4 +113,19 @@ int main() {
 		}
 		broj_runde++;
 	};
+
+	//upis finalnih podataka u fajl
+	string upis = "Broj pobeda igraca A je " + to_string(broj_pobedaA);
+	upis += "\nBroj pobeda igraca B je " + to_string(broj_pobedaB);
+	if (broj_pobedaA > broj_pobedaB) {
+		upis += "\nPOBEDNIK CELE IGRE JE IGRAC A!";
+	}
+	else if (broj_pobedaA < broj_pobedaB) {
+		upis += "\nPOBEDNIK CELE IGRE JE IGRAC B!";
+	}
+	else {
+		upis += "/nIGRA JE IZJEDNACENA!";
+	}
+	fajl_rezultati << upis;
+	fajl_rezultati.close();
 }
