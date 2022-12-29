@@ -1,0 +1,135 @@
+Broj runde: 1
+Dostupni podaci: 4 7 1 9 25 32 
+Trazeni broj: 233
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 232
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 231
+Izraz igraca A je d
+Izraz igraca B je fd
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 4 7 1 9 25 32 233
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 2
+Dostupni podaci: 6 9 4 1 19 65 
+Trazeni broj: 231
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 230
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 229
+Izraz igraca A je dfs
+Izraz igraca B je sfd
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 6 9 4 1 19 65 231
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 3
+Dostupni podaci: 3 5 7 9 41 11 
+Trazeni broj: 929
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 928
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 927
+Izraz igraca A je dfs
+Izraz igraca B je dfs
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 3 5 7 9 41 11 929
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 4
+Dostupni podaci: 8 8 4 8 16 32 
+Trazeni broj: 333
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 332
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 331
+Izraz igraca A je df
+Izraz igraca B je dfs
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 8 8 4 8 16 32 333
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 5
+Dostupni podaci: 1 7 8 2 10 25 
+Trazeni broj: 319
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 318
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 317
+Izraz igraca A je f
+Izraz igraca B je df
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 1 7 8 2 10 25 319
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 6
+Dostupni podaci: 3 1 2 1 10 11 
+Trazeni broj: 998
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 997
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 996
+Izraz igraca A je fd
+Izraz igraca B je fd
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 3 1 2 1 10 11 998
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 7
+Dostupni podaci: 3 1 2 1 10 11 
+Trazeni broj: 999
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 998
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 997
+Izraz igraca A je f
+Izraz igraca B je df
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 3 1 2 1 10 11 999
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 8
+Dostupni podaci: 1 1 2 3 11 27 
+Trazeni broj: 777
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 776
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 775
+Izraz igraca A je fd
+Izraz igraca B je fd
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 1 1 2 3 11 27 777
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 9
+Dostupni podaci: 2 6 8 4 15 25 
+Trazeni broj: 680
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 679
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 678
+Izraz igraca A je fd
+Izraz igraca B je fd
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 2 6 8 4 15 25 680
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 10
+Dostupni podaci: 7 4 9 8 28 13 
+Trazeni broj: 521
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 520
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 519
+Izraz igraca A je df
+Izraz igraca B je f
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 7 4 9 8 28 13 521
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj runde: 11
+Dostupni podaci: 9 6 3 4 22 49 
+Trazeni broj: 350
+Igrac A je dobio vrednost 1 koja odsutpa od trazenog za 349
+Igrac B je dobio vrednost 2 koja odsutpa od trazenog za 348
+Izraz igraca A je f
+Izraz igraca B je f
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 9 6 3 4 22 49 350
+Vrednost resenja koje je dobio kompjuter je 3
+
+
+Broj pobeda igraca A je 0
+Broj pobeda igraca B je 11
+POBEDNIK CELE IGRE JE IGRAC B!

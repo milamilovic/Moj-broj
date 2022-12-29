@@ -1,3 +1,6 @@
+//ovaj program sluzi za igranje igre ,,Moj broj" u paru
+//autor Mila Milovic SV22/2021
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -6,7 +9,7 @@
 
 using namespace std;
 
-//funkcija koja nam splituje string na delove po razmaku
+//pomocna funkcija koja nam splituje string na delove po razmaku
 vector<string> split(const string& s)
 {
 	stringstream ss(s);
@@ -25,16 +28,21 @@ int main() {
 	cout << "Pobednik je igrac koji na kraju igre ima najvise poena." << endl;
 	cout << "Igra sada pocinje, srecno!" << endl << endl;
 
-	//ucitavamo podatke
+	//ucitavamo podatke tj otvaramo fajl
 	string ime_fajla = "";
-	ifstream in(ime_fajla);
-	while (!in)
+	ifstream in_stream;
+	while (true)
 	{
 		if (ime_fajla != "") {
-			cerr << "GRESKA: pogresno ime ulaznog fajla!";
+			cerr << "GRESKA: pogresno ime ulaznog fajla! ";
 		}
 		cout << "Unesite ime ulaznog fajla: " << endl;
 		cin >> ime_fajla;
+		in_stream.open(ime_fajla);
+		if (in_stream.fail()) {
+			continue;
+		}
+		break;
 	}
 	
 	bool igracA = true;
@@ -46,17 +54,18 @@ int main() {
 	int broj_pobedaB = 0;
 
 	//svaka iteracija ove while petlje u stvari predstavlja jednu rundu igre
-	while (!in.eof())
+	while (!in_stream.eof())
 	{
 		//ispisujemo podatke u konzolu
 		string red;
-		getline(in, red);
+		getline(in_stream, red);
 		vector<string> reci = split(red);
 		cout << "Brojevi koji se koriste:" << endl;
 		string dostupni_brojevi = "";
 		for (int i = 0; i < reci.size() - 1; i++) {
 			cout << reci.at(i) << '\n';
 			dostupni_brojevi += reci.at(i);
+			dostupni_brojevi += " ";
 		}
 		cout << "Trazeni broj: " << reci.at(reci.size() - 1) << endl << endl;
 
@@ -93,7 +102,7 @@ int main() {
 			 pobednik += "igrac B";
 			 broj_pobedaB++;
 		}
-		string upis = "Broj runde: " + to_string(broj_runde) + "/nDostupni podaci: " + dostupni_brojevi;
+		string upis = "Broj runde: " + to_string(broj_runde) + "\nDostupni podaci: " + dostupni_brojevi;
 		upis += "\nTrazeni broj: " + reci.at(reci.size() - 1);
 		upis += "\nIgrac A je dobio vrednost " + to_string(vrednostA) + " koja odsutpa od trazenog za " + to_string(abs(stoi(reci.at(reci.size() - 1)) - vrednostA));
 		upis += "\nIgrac B je dobio vrednost " + to_string(vrednostB) + " koja odsutpa od trazenog za " + to_string(abs(stoi(reci.at(reci.size() - 1)) - vrednostB));
@@ -101,7 +110,7 @@ int main() {
 		upis += "\nIzraz igraca B je " + unos_igracB;
 		upis += "\nRundu je dobio " + pobednik;
 		upis += "\nIzraz koji je kompjuter dobio je " + resenje;
-		upis += "\nVrednost resenja koje je dobio kompjuter je " + to_string(vrednostK) + "/n/n/n";
+		upis += "\nVrednost resenja koje je dobio kompjuter je " + to_string(vrednostK) + "\n\n\n";
 		fajl_rezultati << upis;
 
 		//podesavanje promenljivih za sledecu rundu
@@ -119,13 +128,18 @@ int main() {
 	upis += "\nBroj pobeda igraca B je " + to_string(broj_pobedaB);
 	if (broj_pobedaA > broj_pobedaB) {
 		upis += "\nPOBEDNIK CELE IGRE JE IGRAC A!";
+		cout << "\nPOBEDNIK CELE IGRE JE IGRAC A!" << endl;
 	}
 	else if (broj_pobedaA < broj_pobedaB) {
 		upis += "\nPOBEDNIK CELE IGRE JE IGRAC B!";
+		cout << "\nPOBEDNIK CELE IGRE JE IGRAC B!" << endl;
 	}
 	else {
 		upis += "/nIGRA JE IZJEDNACENA!";
 	}
 	fajl_rezultati << upis;
 	fajl_rezultati.close();
+
+	system("pause");
+	exit(0);
 }
