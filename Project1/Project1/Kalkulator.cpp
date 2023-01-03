@@ -10,16 +10,24 @@ using namespace std;
 #define vector Vector
 
 //konstruktori
-Kalkulator::Kalkulator(){
-	this->trazeno = 0;
-};
-Kalkulator::Kalkulator(int broj) {
+Kalkulator::Kalkulator() : trazeno(0), brojevi{0, 0, 0, 0, 0, 0}, najblize(0), najblizi_izraz(""), trenutni(0){};
+
+Kalkulator::Kalkulator(int broj, int brojevi[6]) {
 	this->trazeno = broj;
+	this->brojevi[0] = brojevi[0];
+	this->brojevi[1] = brojevi[1];
+	this->brojevi[2] = brojevi[2];
+	this->brojevi[3] = brojevi[3];
+	this->brojevi[4] = brojevi[4];
+	this->brojevi[5] = brojevi[5];
+	this->najblize = 0;
+	this->najblizi_izraz = "";
+	this->trenutni = 0;
 };
 
 //izraz mora biti sacinjen iskljucivo iz brojeva, operanada +, - , * i / i zagrada
 //inace se vraca vrednost 999999999 koja oznacava nevalidan izraz
-int Kalkulator::izracunaj(string stringic, int brojevi[6]) {
+int Kalkulator::izracunaj(string stringic) {
 
 	//izbacujemo prvo izraze koji su predugacki i izraze koji sadrze nesto osim brojeva, operanada i zagrada
 	if ((stringic.length() > 20)||(stringic.length() <=0)) {
@@ -32,6 +40,11 @@ int Kalkulator::izracunaj(string stringic, int brojevi[6]) {
 	}
 
 	//sada racunamo izraz, za ovo koristim kod kalkulatora sa vezbi
-	return iskalkulisi(stringic, brojevi);
+	trenutni = iskalkulisi(stringic, this->brojevi);
+	if (abs(trenutni - trazeno) < abs(najblize - trazeno)) {
+		najblize = trenutni;
+		najblizi_izraz = stringic;
+	}
+	return trenutni;
 	
 };

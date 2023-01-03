@@ -25,20 +25,67 @@ vector<string> split(string s)
 		end = s.find(deli, start);
 	}
 	words.push_back(s.substr(start, end - start));
-
-
-	//stringstream ss(s);
-	//vector<string> words;
-	//for (string w; ss >> w; ) words.push_back(w);
 	return words;
 }
 
-//funkcija koja
-string izracunaj_sve(vector<int> dostupni_brojevi) {
-	for (int i = 0; i < dostupni_brojevi.size(); i++) {
-		cout << dostupni_brojevi[i] << " ";
+template<class _Tnumber, class _Titerator >
+bool next_variation
+(
+	_Titerator const& _First
+	, _Titerator const& _Last
+	, _Tnumber const& _Upper
+	, _Tnumber const& _Start = 0
+	, _Tnumber const& _Step = 1
+)
+{
+	_Titerator _Next = _First;
+	while (_Next != _Last)
+	{
+		*_Next += _Step;
+		if (*_Next < _Upper)
+		{
+			return true;
+		}
+		(*_Next) = _Start;
+		++_Next;
 	}
-	cout << endl;
+	return false;
+}
+
+string operacije = "+-*/";
+string zagrade = "()";
+string stringic = "";
+//funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
+//i sve varijante operanada medju njima
+string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator& k) {
+	int broj_operacija = dostupni_brojevi.size() - 1;
+	int min = 0;
+	int max = 3;
+	int range = max - min + 1;
+	int num;
+	int dobijeni_broj;
+	sort(dostupni_brojevi.begin(), dostupni_brojevi.end());
+	//za svaku permutaciju brojeva
+	do {
+		//za svaku varijaciju operacija
+		string indexi = "";
+		for (int i = 0; i < dostupni_brojevi.size()-1; i++) {
+			indexi += "0";
+		}
+		do {
+			stringic = "";
+			for (int i = 0; i < dostupni_brojevi.size(); i++) {
+				stringic += to_string(dostupni_brojevi[i]);
+				if (i != dostupni_brojevi.size() - 1) {
+					stringic += operacije[int(indexi[i])-48];
+				}
+			}
+			dobijeni_broj = k.izracunaj(stringic);
+			if (dobijeni_broj == k.trazeno) {
+				return stringic;
+			}
+		} while (next_variation<double>(indexi.begin(), indexi.end(), '4', '0'));
+	} while (next_permutation(dostupni_brojevi.begin(), dostupni_brojevi.end()));
 	return "";
 }
 
@@ -100,7 +147,7 @@ int main() {
 		cout << "Trazeni broj: " << trazeni_broj << endl << endl;
 
 		//napravimo kalkulator za ovu rundu
-		Kalkulator kalkulator = Kalkulator(stoi(trazeni_broj));
+		Kalkulator kalkulator = Kalkulator(stoi(trazeni_broj), ponudjeni_brojevi);
 
 		//igraci unose svoje izraze i oni se odmah racunaju
 		int vrednostA;
@@ -118,7 +165,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostA = kalkulator.izracunaj(unos_igracA, ponudjeni_brojevi);
+				vrednostA = kalkulator.izracunaj(unos_igracA);
 				if (vrednostA != 999999999) {
 					break;
 				}
@@ -138,7 +185,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostB = kalkulator.izracunaj(unos_igracB, ponudjeni_brojevi);
+				vrednostB = kalkulator.izracunaj(unos_igracB);
 				if (vrednostB != 999999999) {
 					break;
 				}
@@ -160,7 +207,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostB = kalkulator.izracunaj(unos_igracB, ponudjeni_brojevi);
+				vrednostB = kalkulator.izracunaj(unos_igracB);
 				if (vrednostB != 999999999) {
 					break;
 				}
@@ -180,7 +227,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostA = kalkulator.izracunaj(unos_igracA, ponudjeni_brojevi);
+				vrednostA = kalkulator.izracunaj(unos_igracA);
 				if (vrednostA != 999999999) {
 					break;
 				}
@@ -204,14 +251,7 @@ int main() {
 			for (int i : ponudjeni_brojevi) {
 				dostupni_brojevi_vektor.push_back(i);
 			}
-			//proverimo kombinacije sa 6 brojeva
-			//ova funkcija ispituje sve moguce permutacije ovih brojeva (ispituje i sve varijante operanada)
-			string izraz = izracunaj_sve(dostupni_brojevi_vektor);
-			if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
-				resenje += izraz;
-				break;
-			}
-			//ako resenje ne postoji proveravamo da li ima resenje sa manje brojeva tj 5
+			//proveravamo resenja sa 5 i manje brojeva u sebi
 			int eliminisani_broj5 = 9999;
 			for (int i = 0; i < 6; i++) {
 				//proverimo da li smo u prethodnoj iteraciji nasli resenje
@@ -229,9 +269,10 @@ int main() {
 				eliminisani_broj5 = dostupni_brojevi_vektor[i];
 				dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + i);
 				//dakle sad ispitamo kombinacije sa 5 brojeva
-				string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+				//ova funkcija ispituje sve moguce permutacije ovih brojeva (ispituje i sve varijante operanada)
+				string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
 				int eliminisani_broj4 = 9999;
-				if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+				if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
 					resenje += izraz;
 					break;
 				}
@@ -248,9 +289,9 @@ int main() {
 						eliminisani_broj4 = dostupni_brojevi_vektor[j];
 						dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + j);
 						//dakle kombinacije sa 4 broja
-						string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+						string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
 						int eliminisani_broj3 = 9999;
-						if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+						if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
 							resenje += izraz;
 							break;
 						}
@@ -266,9 +307,9 @@ int main() {
 								eliminisani_broj3 = dostupni_brojevi_vektor[k];
 								dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + k);
 								//dakle kombinacije sa 3 broja
-								string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+								string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
 								int eliminisani_broj2 = 9999;
-								if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+								if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
 									resenje += izraz;
 									break;
 								}
@@ -284,8 +325,8 @@ int main() {
 										eliminisani_broj2 = dostupni_brojevi_vektor[l];
 										dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + l);
 										//dakle kombinacije sa 2 broja
-										string izraz = izracunaj_sve(dostupni_brojevi_vektor);
-										if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+										string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
+										if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
 											resenje += izraz;
 											break;
 										}
@@ -300,8 +341,24 @@ int main() {
 				}
 			}
 			dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.end(), eliminisani_broj5);
+			//proverimo kombinacije sa 6 brojeva
+			if (resenje == "") {
+				string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
+				if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+					resenje += izraz;
+					break;
+				}
+			}
 		}
-		int vrednostK = kalkulator.izracunaj(resenje, ponudjeni_brojevi);
+		int vrednostK;
+		if (resenje != "") {
+			vrednostK = kalkulator.izracunaj(resenje);
+		}
+		else {
+			vrednostK = kalkulator.najblize;
+		}
+		cout << "Izraz koji je kompjuter pronasao je: " << kalkulator.najblizi_izraz << endl;
+		cout << "Vrednost ovog izraza je " << vrednostK << endl << endl << endl;
 
 		//provera ko je blizi i upisivanje u fajl
 		string pobednik = "";
@@ -359,5 +416,8 @@ int main() {
 	fajl_rezultati << upis;
 	fajl_rezultati.close();
 
-	keep_window_open();
+	//keep_window_open();
+	//ovo iznad ne bih da obrisem jer nekad ov sysem("pause") samo odluci da ne radi 10 min pa tad koristim keep window open
+	system("pause");
+	exit(0);
 }

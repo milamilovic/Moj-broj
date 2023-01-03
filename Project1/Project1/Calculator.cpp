@@ -134,6 +134,10 @@ int Token_stream::term()
 		{
 			int d = primary();
 			if (d == 0) error("divide by zero");
+			if (left%d != 0) {
+				error("Not divisable");
+				return 999999999;
+			}
 			left /= d;
 			t = nabavi();
 			break;
