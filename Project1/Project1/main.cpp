@@ -6,6 +6,9 @@
 #include <sstream>
 #include <algorithm>
 #include "Kalkulator.h"
+#include <list>
+#include <cstdlib>
+#include "std_lib_facilities.h"
 
 using namespace std;
 
@@ -28,6 +31,15 @@ vector<string> split(string s)
 	//vector<string> words;
 	//for (string w; ss >> w; ) words.push_back(w);
 	return words;
+}
+
+//funkcija koja
+string izracunaj_sve(vector<int> dostupni_brojevi) {
+	for (int i = 0; i < dostupni_brojevi.size(); i++) {
+		cout << dostupni_brojevi[i] << " ";
+	}
+	cout << endl;
+	return "";
 }
 
 int main() {
@@ -84,10 +96,11 @@ int main() {
 			dostupni_brojevi += " ";
 			ponudjeni_brojevi[i] = stoi(reci.at(i));
 		}
-		cout << "Trazeni broj: " << reci.at(reci.size() - 1) << endl << endl;
+		string trazeni_broj = reci.at(reci.size() - 1);
+		cout << "Trazeni broj: " << trazeni_broj << endl << endl;
 
 		//napravimo kalkulator za ovu rundu
-		Kalkulator kalkulator = Kalkulator(stoi(reci.at(reci.size() - 1)));
+		Kalkulator kalkulator = Kalkulator(stoi(trazeni_broj));
 
 		//igraci unose svoje izraze i oni se odmah racunaju
 		int vrednostA;
@@ -178,16 +191,125 @@ int main() {
 		}
 
 		//pronalazak tacnog(najblizeg) resenja
-		string resenje = red;
-		int vrednostK = 3;
+		//ako je nekood igraca nasao tacno resenje nece ni traziti vec uzima to
+		string resenje = "";
+		if (vrednostA == stoi(trazeni_broj)) {
+			resenje += unos_igracA;
+		}
+		else if (vrednostB == stoi(trazeni_broj)) {
+			resenje += unos_igracB;
+		}
+		else {
+			vector<int>dostupni_brojevi_vektor;
+			for (int i : ponudjeni_brojevi) {
+				dostupni_brojevi_vektor.push_back(i);
+			}
+			//proverimo kombinacije sa 6 brojeva
+			//ova funkcija ispituje sve moguce permutacije ovih brojeva (ispituje i sve varijante operanada)
+			string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+			if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+				resenje += izraz;
+				break;
+			}
+			//ako resenje ne postoji proveravamo da li ima resenje sa manje brojeva tj 5
+			int eliminisani_broj5 = 9999;
+			for (int i = 0; i < 6; i++) {
+				//proverimo da li smo u prethodnoj iteraciji nasli resenje
+				if (resenje != "") {
+					break;
+				}
+				if (eliminisani_broj5 != 9999) {
+					dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.begin() + i - 1, eliminisani_broj5);
+				}
+				//ovde proverimo da li je jedan od ponudjenih brojeva ujedno i resenje
+				if (ponudjeni_brojevi[i] == stoi(trazeni_broj)) {
+					resenje += to_string(ponudjeni_brojevi[i]);
+					break;
+				}
+				eliminisani_broj5 = dostupni_brojevi_vektor[i];
+				dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + i);
+				//dakle sad ispitamo kombinacije sa 5 brojeva
+				string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+				int eliminisani_broj4 = 9999;
+				if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+					resenje += izraz;
+					break;
+				}
+				//ako ne postoji probamo da uklonimo jos dakle sa 4 broja
+				else {
+					for (int j = 0; j < 5; j++) {
+						//proverimo da li smo u prethodnoj iteraciji nasli resenje
+						if (resenje != "") {
+							break;
+						}
+						if (eliminisani_broj4 != 9999) {
+							dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.begin() + j - 1, eliminisani_broj4);
+						}
+						eliminisani_broj4 = dostupni_brojevi_vektor[j];
+						dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + j);
+						//dakle kombinacije sa 4 broja
+						string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+						int eliminisani_broj3 = 9999;
+						if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+							resenje += izraz;
+							break;
+						}
+						else {
+							for (int k = 0; k < 4; k++) {
+								//proverimo da li smo u prethodnoj iteraciji nasli resenje
+								if (resenje != "") {
+									break;
+								}
+								if (eliminisani_broj3 != 9999) {
+									dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.begin() + k - 1, eliminisani_broj3);
+								}
+								eliminisani_broj3 = dostupni_brojevi_vektor[k];
+								dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + k);
+								//dakle kombinacije sa 3 broja
+								string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+								int eliminisani_broj2 = 9999;
+								if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+									resenje += izraz;
+									break;
+								}
+								else {
+									for (int l = 0; l < 3; l++) {
+										//proverimo da li smo u prethodnoj iteraciji nasli resenje
+										if (resenje != "") {
+											break;
+										}
+										if (eliminisani_broj2 != 9999) {
+											dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.begin() + l - 1, eliminisani_broj2);
+										}
+										eliminisani_broj2 = dostupni_brojevi_vektor[l];
+										dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + l);
+										//dakle kombinacije sa 2 broja
+										string izraz = izracunaj_sve(dostupni_brojevi_vektor);
+										if (kalkulator.izracunaj(izraz, ponudjeni_brojevi) == stoi(trazeni_broj)) {
+											resenje += izraz;
+											break;
+										}
+									}
+									dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.end(), eliminisani_broj2);
+								}
+							}
+							dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.end(), eliminisani_broj3);
+						}
+					}
+					dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.end(), eliminisani_broj4);
+				}
+			}
+			dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.end(), eliminisani_broj5);
+		}
+		int vrednostK = kalkulator.izracunaj(resenje, ponudjeni_brojevi);
 
 		//provera ko je blizi i upisivanje u fajl
 		string pobednik = "";
-		if (abs(stoi(reci.at(reci.size() - 1)) - vrednostA) < abs(stoi(reci.at(reci.size() - 1)) - vrednostB)) {
+		if (abs(stoi(trazeni_broj) - vrednostA) < abs(stoi(trazeni_broj) - vrednostB)) {
 			pobednik += "igrac A";
 			broj_pobedaA++;
 		}
-		else if (abs(stoi(reci.at(reci.size() - 1)) - vrednostA) > abs(stoi(reci.at(reci.size() - 1)) - vrednostB)) {
+		else if (abs(stoi(trazeni_broj) - vrednostA) > abs(stoi(trazeni_broj) - vrednostB)) {
 			pobednik += "igrac B";
 			broj_pobedaB++;
 		}
@@ -200,9 +322,9 @@ int main() {
 			broj_pobedaB++;
 		}
 		string upis = "Broj runde: " + to_string(broj_runde) + "\nDostupni podaci: " + dostupni_brojevi;
-		upis += "\nTrazeni broj: " + reci.at(reci.size() - 1);
-		upis += "\nIgrac A je dobio vrednost " + to_string(vrednostA) + " koja odsutpa od trazenog za " + to_string(abs(stoi(reci.at(reci.size() - 1)) - vrednostA));
-		upis += "\nIgrac B je dobio vrednost " + to_string(vrednostB) + " koja odsutpa od trazenog za " + to_string(abs(stoi(reci.at(reci.size() - 1)) - vrednostB));
+		upis += "\nTrazeni broj: " + trazeni_broj;
+		upis += "\nIgrac A je dobio vrednost " + to_string(vrednostA) + " koja odsutpa od trazenog za " + to_string(abs(stoi(trazeni_broj) - vrednostA));
+		upis += "\nIgrac B je dobio vrednost " + to_string(vrednostB) + " koja odsutpa od trazenog za " + to_string(abs(stoi(trazeni_broj) - vrednostB));
 		upis += "\nIzraz igraca A je " + unos_igracA;
 		upis += "\nIzraz igraca B je " + unos_igracB;
 		upis += "\nRundu je dobio " + pobednik;
@@ -237,6 +359,5 @@ int main() {
 	fajl_rezultati << upis;
 	fajl_rezultati.close();
 
-	system("pause");
-	exit(0);
+	keep_window_open();
 }
