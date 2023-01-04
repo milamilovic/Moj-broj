@@ -79,8 +79,10 @@ Token Token_stream::nabavi()
 		//provera da li je broj jedan od ponudjenih
 		bool dobar = false;
 		for (int k = 0; k < 6; k++) {
-			if (val == nums[k]) {
+			if (val == nums[k] && nums[k]!=9999) {
 				dobar = true;
+				nums[k] = 9999;
+				break;
 			}
 		}
 		if (dobar) {
@@ -106,6 +108,7 @@ int Token_stream::primary()
 		int d = expression();
 		t = nabavi();
 		if (t.kind != ')') error("')' expected");
+		d *= primary();
 		return d;
 	}
 	case '8':            // we use '8' to represent a number

@@ -52,39 +52,64 @@ bool next_variation
 	return false;
 }
 
-string operacije = "+-*/";
-string zagrade = "()";
+string operacije = "+-*/()";
 string stringic = "";
+int visak_zagrada = 0;
+int dobijeni_broj;
 //funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
 //i sve varijante operanada medju njima
 string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator& k) {
-	int broj_operacija = dostupni_brojevi.size() - 1;
+	int broj_operacija = dostupni_brojevi.size() + 1;
 	int min = 0;
 	int max = 3;
 	int range = max - min + 1;
 	int num;
-	int dobijeni_broj;
 	sort(dostupni_brojevi.begin(), dostupni_brojevi.end());
 	//za svaku permutaciju brojeva
 	do {
 		//za svaku varijaciju operacija
 		string indexi = "";
-		for (int i = 0; i < dostupni_brojevi.size()-1; i++) {
+		for (int i = 0; i < dostupni_brojevi.size()+1; i++) {
 			indexi += "0";
 		}
 		do {
+			visak_zagrada = 0;
 			stringic = "";
+			//konstruisemo izraz
 			for (int i = 0; i < dostupni_brojevi.size(); i++) {
-				stringic += to_string(dostupni_brojevi[i]);
-				if (i != dostupni_brojevi.size() - 1) {
-					stringic += operacije[int(indexi[i])-48];
+				//ako se ispred prvog broja nalazi ( dodajemo je ostale operacije ne
+				if (i == 0 && (int(indexi[i]) - 48) == 4) {
+					stringic += operacije[int(indexi[i]) - 48];
+					visak_zagrada -= 1;
 				}
+				stringic += to_string(dostupni_brojevi[i]);
+				//ako smo na poslednjem broju
+				if (i == dostupni_brojevi.size()-1){
+					//dodajemo operaciju iza samo ako je )
+					if (int(indexi[i]) - 48 == 5) {
+						stringic += operacije[int(indexi[i+1]) - 48];
+						visak_zagrada += 1;
+					}
+				}
+				//inace sve dodajemo
+				else {
+					stringic += operacije[int(indexi[i+1]) - 48];
+					if (int(indexi[i+1]) - 48 == 5) {
+						visak_zagrada += 1;
+					}
+					if (int(indexi[i+1]) - 48 == 4) {
+						visak_zagrada -= 1;
+					}
+				}
+			}
+			if (visak_zagrada != 0) {
+				continue;
 			}
 			dobijeni_broj = k.izracunaj(stringic);
 			if (dobijeni_broj == k.trazeno) {
 				return stringic;
 			}
-		} while (next_variation<double>(indexi.begin(), indexi.end(), '4', '0'));
+		} while (next_variation<double>(indexi.begin(), indexi.end(), '6', '0'));
 	} while (next_permutation(dostupni_brojevi.begin(), dostupni_brojevi.end()));
 	return "";
 }
