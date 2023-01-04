@@ -142,6 +142,11 @@ int Token_stream::term()
 			t = nabavi();
 			break;
 		}
+		case '(':
+			ts.vrati(t);
+			left *= primary();
+			t = nabavi();
+			break;
 		default:
 			vrati(t);     // put t back into the token stream
 			return left;
