@@ -108,7 +108,11 @@ int Token_stream::primary()
 		int d = expression();
 		t = nabavi();
 		if (t.kind != ')') error("')' expected");
-		d *= primary();
+		t = nabavi();
+		if (t.kind != '\0') {
+			d *= primary();
+		}
+		ts.vrati(t);
 		return d;
 	}
 	case '8':            // we use '8' to represent a number
@@ -139,7 +143,7 @@ int Token_stream::term()
 			if (d == 0) error("divide by zero");
 			if (left%d != 0) {
 				error("Not divisable");
-				return 999999999;
+				return 0;
 			}
 			left /= d;
 			t = nabavi();
