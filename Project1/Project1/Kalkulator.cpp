@@ -10,7 +10,7 @@ using namespace std;
 #define vector Vector
 
 //konstruktori
-Kalkulator::Kalkulator() : trazeno(0), brojevi{0, 0, 0, 0, 0, 0}, najblize(0), najblizi_izraz(""), trenutni(0){};
+Kalkulator::Kalkulator() : trazeno(0), brojevi{ 0, 0, 0, 0, 0, 0 }, najblize(0), najblizi_izraz(""), trenutni(0){};
 
 Kalkulator::Kalkulator(int broj, int brojevi[6]) {
 	this->trazeno = broj;
@@ -30,7 +30,7 @@ Kalkulator::Kalkulator(int broj, int brojevi[6]) {
 int Kalkulator::izracunaj(string stringic) {
 
 	//izbacujemo prvo izraze koji su predugacki i izraze koji sadrze nesto osim brojeva, operanada i zagrada
-	if ((stringic.length() > 20)||(stringic.length() <=0)) {
+	if ((stringic.length() > 20) || (stringic.length() <= 0)) {
 		return 999999999;
 	}
 	for (char c : stringic) {
@@ -46,5 +46,5 @@ int Kalkulator::izracunaj(string stringic) {
 		najblizi_izraz = stringic;
 	}
 	return trenutni;
-	
+
 };

@@ -10,7 +10,7 @@ Token::Token(char ch)    // make a Token from a char
 	:kind(ch), value(0) { }
 
 Token::Token(char ch, int val)     // make a Token from a char and a double
-	:kind(ch), value(val) { }
+	: kind(ch), value(val) { }
 
 Token::Token(const Token &t)
 {
@@ -64,7 +64,7 @@ Token Token_stream::nabavi()
 	case '5': case '6': case '7': case '8': case '9':
 	{
 		//procitaj broj
-		int val = int(ch)-int('0');
+		int val = int(ch) - int('0');
 		char drugi = izraz[index];
 		if (drugi != '*'&&drugi != '/'&&drugi != '+'&&drugi != '-'&&drugi != '('&&drugi != ')'&&drugi != '\0') {
 			val *= 10;
@@ -72,14 +72,14 @@ Token Token_stream::nabavi()
 			index++;
 			//ako udje u ovaj if onda je prosledjen trocifreni broj sto nije validno
 			if (izraz[index] == '0' || izraz[index] == '1' || izraz[index] == '2' || izraz[index] == '3' || izraz[index] == '4' || izraz[index] == '5' || izraz[index] == '6' || izraz[index] == '7' || izraz[index] == '8' || izraz[index] == '9') {
-				error("Bad token");
+				throw exception("Bad token");
 				return 999999999;
 			}
 		}
 		//provera da li je broj jedan od ponudjenih
 		bool dobar = false;
 		for (int k = 0; k < 6; k++) {
-			if (val == nums[k] && nums[k]!=9999) {
+			if (val == nums[k] && nums[k] != 9999) {
 				dobar = true;
 				nums[k] = 9999;
 				break;
@@ -93,7 +93,7 @@ Token Token_stream::nabavi()
 		}
 	}
 	default:
-		error("Bad token");
+		throw exception("Bad token");
 		return 999999999;
 	}
 }
@@ -118,7 +118,7 @@ int Token_stream::primary()
 	case '8':            // we use '8' to represent a number
 		return t.value;  // return the number's value
 	default:
-		error("primary expected");
+		throw exception("primary expected");
 		return 999999999;
 	}
 }
@@ -140,10 +140,10 @@ int Token_stream::term()
 		case '/':
 		{
 			int d = primary();
-			if (d == 0) error("divide by zero");
+			if (d == 0) throw exception("divide by zero");
 			if (left%d != 0) {
-				error("Not divisable");
-				return 0;
+				throw domain_error("Not divisable");
+				return 5555555;
 			}
 			left /= d;
 			t = nabavi();
@@ -206,6 +206,8 @@ try
 	}
 	return val;
 }
-catch (...) {
+catch (std::domain_error e) {
+	return 5555555;
+} catch(...) {
 	return 999999999;
 }

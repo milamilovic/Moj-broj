@@ -121,7 +121,7 @@ string izracunaj_sve_zagrade(vector<int> dostupni_brojevi, Kalkulator& k) {
 					//ako smo na poslednjem broju
 					if (i == dostupni_brojevi.size() - 1) {
 						//dodajemo operaciju iza samo ako je ')'
-						if (int(indexi[i+1]) - 48 == 5) {
+						if (int(indexi[i + 1]) - 48 == 5) {
 							stringic += operacije_zagrade[int(indexi[i + 1]) - 48];
 							visak_zagrada += 1;
 						}
@@ -392,11 +392,10 @@ int main() {
 	//upuststva za igrace
 	cout << "Dobro dosli u igru moj broj!" << endl;
 	cout << "Igra se igra u nekoliko rundi, u prvoj je prvi igrac igrac A, u drugoj igrac B i tako naizmenicno" << endl;
-	cout << "Potrebno je sastaviti izraz sa vrednoscu tacno tj sto blize trazenom broju i sto je blize to vise poena nosi." << endl;
-	cout << "Tacan broj nosi 20 pona, +-5 nosi 10 poena, a +-5-10 bodova vredi 5 poena" << endl;
-	cout << "Na kraju svake runde ce kompjuter prikazati (jedno) tacno resenje ili najblize moguce resenje." << endl;
-	cout << "Pobednik je igrac koji na kraju igre ima najvise poena." << endl;
-	cout << "Ukoliko oba igraca dodju do sitog resenja pobednik je onaj igrac koji je prvi igrao u toj rundi." << endl;
+	cout << "Potrebno je sastaviti izraz sa vrednoscu tacno tj sto blize trazenom broju." << endl;
+	cout << "Pobednik runde je igrac koji ima izraz blize vrednost trazenoj." << endl;
+	cout << "Ukoliko oba igraca dodju do istog resenja pobednik je onaj igrac koji je prvi igrao u toj rundi." << endl;
+	cout << "Pobednik je igrac koji pobedi u vise rundi." << endl;
 	cout << "Igra sada pocinje, srecno!" << endl << endl;
 
 	//ucitavamo podatke tj otvaramo fajl
@@ -423,6 +422,7 @@ int main() {
 	string unos_igracB = "";
 	int broj_runde = 1;
 	ofstream fajl_rezultati("Rezultati.txt");
+	fajl_rezultati.close();
 	int broj_pobedaA = 0;
 	int broj_pobedaB = 0;
 
@@ -474,6 +474,11 @@ int main() {
 			}
 			while (true)
 			{
+				//ako je prvi igrac uneo nevalidan unos igrac b automatski dobija bodove
+				if (vrednostA == 5555555) {
+					vrednostB = stoi(trazeni_broj);
+					break;
+				}
 				cout << "Igrac B je na redu, unesite vase resenje: " << endl;
 				cin >> unos_igracB_0;
 				unos_igracB = "";
@@ -516,6 +521,10 @@ int main() {
 			}
 			while (true)
 			{
+				if (vrednostB == 5555555) {
+					vrednostA = stoi(trazeni_broj);
+					break;
+				}
 				cout << "Igrac A je na redu, unesite vase resenje: " << endl;
 				cin >> unos_igracA_0;
 				unos_igracA = "";
@@ -539,10 +548,10 @@ int main() {
 		//pronalazak tacnog(najblizeg) resenja
 		//ako je nekood igraca nasao tacno resenje nece ni traziti vec uzima to
 		string resenje = "";
-		if (vrednostA == stoi(trazeni_broj)) {
+		if (vrednostA == stoi(trazeni_broj) && vrednostB != 5555555) {
 			resenje += unos_igracA;
 		}
-		else if (vrednostB == stoi(trazeni_broj)) {
+		else if (vrednostB == stoi(trazeni_broj) && vrednostA != 5555555) {
 			resenje += unos_igracB;
 		}
 		else {
@@ -556,11 +565,21 @@ int main() {
 			vrednostK = kalkulator.najblize;
 		}
 		cout << "Izraz koji je kompjuter pronasao je: " << kalkulator.najblizi_izraz << endl;
-		cout << "Vrednost ovog izraza je " << vrednostK << endl << endl << endl;
+		cout << "Vrednost ovog izraza je " << vrednostK << endl;
 
 		//provera ko je blizi i upisivanje u fajl
 		string pobednik = "";
-		if (abs(stoi(trazeni_broj) - vrednostA) < abs(stoi(trazeni_broj) - vrednostB)) {
+		if (vrednostA == 5555555) {
+			pobednik += "igrac B";
+			broj_pobedaB++;
+			vrednostA = 0;
+		}
+		else if (vrednostB == 5555555) {
+			pobednik += "igrac A";
+			broj_pobedaA++;
+			vrednostB = 0;
+		}
+		else if (abs(stoi(trazeni_broj) - vrednostA) < abs(stoi(trazeni_broj) - vrednostB)) {
 			pobednik += "igrac A";
 			broj_pobedaA++;
 		}
@@ -576,6 +595,8 @@ int main() {
 			pobednik += "igrac B";
 			broj_pobedaB++;
 		}
+		ofstream fajl_rezultati("Rezultati.txt", ios::app);
+		cout << "Pobednik ove runde je " << pobednik << endl << endl << endl;
 		string upis = "Broj runde: " + to_string(broj_runde) + "\nDostupni podaci: " + dostupni_brojevi;
 		upis += "\nTrazeni broj: " + trazeni_broj;
 		upis += "\nIgrac A je dobio vrednost " + to_string(vrednostA) + " koja odsutpa od trazenog za " + to_string(abs(stoi(trazeni_broj) - vrednostA));
@@ -586,7 +607,7 @@ int main() {
 		upis += "\nIzraz koji je kompjuter dobio je " + resenje;
 		upis += "\nVrednost resenja koje je dobio kompjuter je " + to_string(vrednostK) + "\n\n\n";
 		fajl_rezultati << upis;
-
+		fajl_rezultati.close();
 		//podesavanje promenljivih za sledecu rundu
 		if (igracA) {
 			igracA = false;
