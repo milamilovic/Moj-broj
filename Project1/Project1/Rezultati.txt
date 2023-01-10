@@ -2,9 +2,9 @@ Broj runde: 1
 Dostupni podaci: 4 7 1 9 25 32 
 Trazeni broj: 233
 Igrac A je dobio vrednost 4 koja odsutpa od trazenog za 229
-Igrac B je dobio vrednost 225 koja odsutpa od trazenog za 8
+Igrac B je dobio vrednost 7 koja odsutpa od trazenog za 226
 Izraz igraca A je 4
-Izraz igraca B je 25*9
+Izraz igraca B je 7
 Rundu je dobio igrac B
 Izraz koji je kompjuter dobio je 7*32+9
 Vrednost resenja koje je dobio kompjuter je 233

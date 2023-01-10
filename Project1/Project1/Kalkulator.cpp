@@ -16,9 +16,7 @@ template<typename T>
 Kalkulator<T>::Kalkulator(T broj, T brojici[6])
 {
 	trazeno = broj;
-	cout << brojici[0] << endl;
 	this->brojevi[0] = brojici[0];
-	cout << brojevi[0] << endl;
 	this->brojevi[1] = brojici[1];
 	this->brojevi[2] = brojici[2];
 	this->brojevi[3] = brojici[3];
