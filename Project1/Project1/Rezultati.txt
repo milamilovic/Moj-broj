@@ -1,10 +1,10 @@
 Broj runde: 1
 Dostupni podaci: 3.2 15.1 4.8 7.0 9.3 15.8 
 Trazeni broj: 216.18
-Igrac A je dobio vrednost 1.937500 koja odsutpa od trazenog za 214.242500
-Igrac B je dobio vrednost 1.975000 koja odsutpa od trazenog za 214.205000
-Izraz igraca A je 9.3/4.8
-Izraz igraca B je 15.8/(3.2+4.8)
+Igrac A je dobio vrednost 2.614286 koja odsutpa od trazenog za 213.565714
+Igrac B je dobio vrednost 9.300000 koja odsutpa od trazenog za 206.880000
+Izraz igraca A je (3.2+15.1)/7.0
+Izraz igraca B je 9.3
 Rundu je dobio igrac B
 Izraz koji je kompjuter dobio je 15.1*15.8-3.2*7.0
 Vrednost resenja koje je dobio kompjuter je 216.180000

@@ -299,7 +299,7 @@ int main() {
 			}
 		}
 		if (int_vrednosti) {
-		cout << "Izraz koji je kompjuter pronasao je: " << kalkulator.najblizi_izraz << endl;
+			cout << "Izraz koji je kompjuter pronasao je: " << kalkulator.najblizi_izraz << endl;
 		}
 		else {
 
@@ -338,31 +338,31 @@ int main() {
 			}
 		}
 		else {
-			if(vrednostAd == 5555555) {
+			if (vrednostAd == 5555555) {
 				pobednik += "igrac B";
 				broj_pobedaB++;
 				vrednostAd = 0;
 			}
 			else if (vrednostBd == 5555555) {
-			pobednik += "igrac A";
-			broj_pobedaA++;
-			vrednostBd = 0;
+				pobednik += "igrac A";
+				broj_pobedaA++;
+				vrednostBd = 0;
 			}
 			else if (abs(stod(trazeni_broj) - vrednostAd) < abs(stod(trazeni_broj) - vrednostBd)) {
-			pobednik += "igrac A";
-			broj_pobedaA++;
+				pobednik += "igrac A";
+				broj_pobedaA++;
 			}
 			else if (abs(stod(trazeni_broj) - vrednostAd) > abs(stod(trazeni_broj) - vrednostBd)) {
-			pobednik += "igrac B";
-			broj_pobedaB++;
+				pobednik += "igrac B";
+				broj_pobedaB++;
 			}
 			else if (igracA) {
-			pobednik += "igrac A";
-			broj_pobedaA++;
+				pobednik += "igrac A";
+				broj_pobedaA++;
 			}
 			else {
-			pobednik += "igrac B";
-			broj_pobedaB++;
+				pobednik += "igrac B";
+				broj_pobedaB++;
 			}
 		}
 		ofstream fajl_rezultati("Rezultati.txt", ios::app);

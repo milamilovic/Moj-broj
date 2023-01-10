@@ -43,13 +43,13 @@ T Kalkulator<T>::izracunaj_k(string stringic) {
 
 	//izbacujemo izraze koji sadrze nesto osim brojeva, operanada i zagrada
 	for (char c : stringic) {
-		if (c != '*'&&c != '/'&&c != '+'&&c != '-'&&c != '('&&c != ')'&&c != '0'&&c != '1'&&c != '2'&&c != '3'&&c != '4'&&c != '5'&&c != '6'&&c != '7'&&c != '8'&&c != '9'&&c!='.') {
+		if (c != '*'&&c != '/'&&c != '+'&&c != '-'&&c != '('&&c != ')'&&c != '0'&&c != '1'&&c != '2'&&c != '3'&&c != '4'&&c != '5'&&c != '6'&&c != '7'&&c != '8'&&c != '9'&&c != '.') {
 			return 999999999;
 		}
 	}
 
 	//sada racunamo izraz, za ovo koristim kod kalkulatora sa vezbi
-	double brojici[6] = {0,0,0,0,0,0};
+	double brojici[6] = { 0,0,0,0,0,0 };
 	for (int i = 0; i < 6; i++) {
 		brojici[i] = double(brojevi[i]);
 	}

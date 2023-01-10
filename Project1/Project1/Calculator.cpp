@@ -70,9 +70,9 @@ Token Token_stream::nabavi()
 		//ako je jednocifreni broj sa zarezom
 		if (drugi == '.') {
 			string ostatak = "0.";
-			ostatak += izraz[index+1];
+			ostatak += izraz[index + 1];
 			val += stod(ostatak);
-			index+=2;
+			index += 2;
 			//posle zareza moze biti samo jedna cifra
 			if (izraz[index] == '0' || izraz[index] == '1' || izraz[index] == '2' || izraz[index] == '3' || izraz[index] == '4' || izraz[index] == '5' || izraz[index] == '6' || izraz[index] == '7' || izraz[index] == '8' || izraz[index] == '9') {
 				throw exception("Bad token");
@@ -135,10 +135,14 @@ double Token_stream::primary()
 		t = nabavi();
 		if (t.kind != ')') error("')' expected");
 		t = nabavi();
-		if (t.kind != '\0') {
+		//ako je posle zagrade broj mnozimo
+		if (t.kind == '8') {
+			ts.vrati(t);
 			d *= primary();
 		}
-		ts.vrati(t);
+		else {
+			ts.vrati(t);
+		}
 		return d;
 	}
 	case '8':            // we use '8' to represent a number
@@ -168,7 +172,7 @@ double Token_stream::term()
 			double d = primary();
 			if (d == 0) throw exception("divide by zero");
 			//ako su integeri i nisu deljivi nije validno
-			if (fmod(left,d) != 0 && da_li_je_int) {
+			if (fmod(left, d) != 0 && da_li_je_int) {
 				throw domain_error("Not divisable");
 				return 5555555;
 			}
@@ -234,6 +238,7 @@ try
 }
 catch (std::domain_error e) {
 	return 5555555;
-} catch(...) {
+}
+catch (...) {
 	return 999999999;
 }
