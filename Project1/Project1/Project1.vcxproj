@@ -130,6 +130,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="double_primeri.txt" />
     <Text Include="Rezultati.txt" />
     <Text Include="test_primeri.txt" />
   </ItemGroup>

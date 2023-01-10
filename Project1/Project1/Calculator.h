@@ -32,4 +32,4 @@ private:
 	string izraz;
 };
 
-double iskalkulisi(string izraz, double brojevi[6]);
+double iskalkulisi(string izraz, double brojevi[6], bool int_vrednosti);

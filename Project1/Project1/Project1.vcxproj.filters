@@ -35,6 +35,9 @@
     <Text Include="test_primeri.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="double_primeri.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kalkulator.h">

@@ -5,6 +5,7 @@
 
 Token_stream ts;
 double nums[6];
+bool da_li_je_int;
 
 Token::Token(char ch)    // make a Token from a char
 	:kind(ch), value(0) { }
@@ -66,7 +67,20 @@ Token Token_stream::nabavi()
 		//procitaj broj
 		double val = double(ch) - double('0');
 		char drugi = izraz[index];
-		if (drugi != '*'&&drugi != '/'&&drugi != '+'&&drugi != '-'&&drugi != '('&&drugi != ')'&&drugi != '\0') {
+		//ako je jednocifreni broj sa zarezom
+		if (drugi == '.') {
+			string ostatak = "0.";
+			ostatak += izraz[index+1];
+			val += stod(ostatak);
+			index+=2;
+			//posle zareza moze biti samo jedna cifra
+			if (izraz[index] == '0' || izraz[index] == '1' || izraz[index] == '2' || izraz[index] == '3' || izraz[index] == '4' || izraz[index] == '5' || izraz[index] == '6' || izraz[index] == '7' || izraz[index] == '8' || izraz[index] == '9') {
+				throw exception("Bad token");
+				return 999999999;
+			}
+		}
+		//ako je dvocifreni broj
+		else if (drugi != '*'&&drugi != '/'&&drugi != '+'&&drugi != '-'&&drugi != '('&&drugi != ')'&&drugi != '\0') {
 			val *= 10;
 			val += double(drugi) - double('0');
 			index++;
@@ -74,6 +88,18 @@ Token Token_stream::nabavi()
 			if (izraz[index] == '0' || izraz[index] == '1' || izraz[index] == '2' || izraz[index] == '3' || izraz[index] == '4' || izraz[index] == '5' || izraz[index] == '6' || izraz[index] == '7' || izraz[index] == '8' || izraz[index] == '9') {
 				throw exception("Bad token");
 				return 999999999;
+			}
+			else if (izraz[index] == '.') {
+				//ako je dvocifreni broj sa zarezom
+				string ostatak = "0.";
+				ostatak += izraz[index + 1];
+				val += stod(ostatak);
+				index += 2;
+				//posle zareza moze biti samo jedna cifra
+				if (izraz[index] == '0' || izraz[index] == '1' || izraz[index] == '2' || izraz[index] == '3' || izraz[index] == '4' || izraz[index] == '5' || izraz[index] == '6' || izraz[index] == '7' || izraz[index] == '8' || izraz[index] == '9') {
+					throw exception("Bad token");
+					return 999999999;
+				}
 			}
 		}
 		//provera da li je broj jedan od ponudjenih
@@ -188,13 +214,14 @@ double Token_stream::expression()
 
 //------------------------------------------------------------------------------
 
-double iskalkulisi(string izraz, double brojevi[6])
+double iskalkulisi(string izraz, double brojevi[6], bool int_vrednosti)
 try
 {
+	da_li_je_int = int_vrednosti;
 	for (int i = 0; i < 6; i++) {
 		nums[i] = brojevi[i];
 	}
-	double val;
+	double val = 0;
 	ts = Token_stream(izraz);        // provides nabavi() and vrati() 
 	// cin >> val >> c;
 	// cout << val << endl << c;

@@ -67,6 +67,7 @@ int main() {
 	fajl_rezultati.close();
 	int broj_pobedaA = 0;
 	int broj_pobedaB = 0;
+	bool int_vrednosti = true;
 
 	//svaka iteracija ove while petlje u stvari predstavlja jednu rundu igre
 	while (!in_stream.eof())
@@ -75,6 +76,7 @@ int main() {
 		string red;
 		getline(in_stream, red);
 		vector<string> reci = split(red);
+		double ponudjeni_brojevi_d[6];
 		int ponudjeni_brojevi[6];
 		cout << "Brojevi koji se koriste:" << endl;
 		string dostupni_brojevi = "";
@@ -82,17 +84,39 @@ int main() {
 			cout << reci.at(i) << '\n';
 			dostupni_brojevi += reci.at(i);
 			dostupni_brojevi += " ";
-			ponudjeni_brojevi[i] = stoi(reci.at(i));
+			//ako postoji tacka rec je o double vrednostima
+			for (char c : reci.at(i)) {
+				if (c == '.') {
+					int_vrednosti = false;
+				}
+			}
+		}
+		for (int i = 0; i < reci.size() - 1; i++) {
+			if (int_vrednosti) {
+				ponudjeni_brojevi[i] = stoi(reci.at(i));
+			}
+			else {
+				ponudjeni_brojevi_d[i] = stod(reci.at(i));
+			}
 		}
 		string trazeni_broj = reci.at(reci.size() - 1);
 		cout << "Trazeni broj: " << trazeni_broj << endl << endl;
 
 		//napravimo kalkulator za ovu rundu
-		Kalkulator<int> kalkulator = Kalkulator<int>(stoi(trazeni_broj), ponudjeni_brojevi);
+		Kalkulator<int> kalkulator;
+		Kalkulator<double> kalkulator_d;
+		if (int_vrednosti) {
+			kalkulator = Kalkulator<int>(stoi(trazeni_broj), ponudjeni_brojevi);
+		}
+		else {
+			kalkulator_d = Kalkulator<double>(stod(trazeni_broj), ponudjeni_brojevi_d);
+		}
 
 		//igraci unose svoje izraze i oni se odmah racunaju
-		int vrednostA;
-		int vrednostB;
+		int vrednostA = 0;
+		int vrednostB = 0;
+		double vrednostAd = 0;
+		double vrednostBd = 0;
 		if (igracA) {
 			while (true)
 			{
@@ -104,10 +128,21 @@ int main() {
 					if (c == '*' || c == '/' || c == '+' || c == '-' || c == '(' || c == ')' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {
 						unos_igracA += c;
 					}
+					if (!int_vrednosti && c == '.') {
+						unos_igracA += c;
+					}
 				}
 				//racunamo vrednost izraza
-				vrednostA = kalkulator.izracunaj_k(unos_igracA);
-				if (vrednostA != 999999999) {
+				if (int_vrednosti) {
+					vrednostA = kalkulator.izracunaj_k(unos_igracA);
+				}
+				else {
+					vrednostAd = kalkulator_d.izracunaj_k(unos_igracA);
+				}
+				if (int_vrednosti && vrednostA != 999999999) {
+					break;
+				}
+				if (!int_vrednosti && vrednostAd != 999999999) {
 					break;
 				}
 				else {
@@ -118,7 +153,12 @@ int main() {
 			{
 				//ako je prvi igrac uneo nevalidan unos igrac b automatski dobija bodove
 				if (vrednostA == 5555555) {
-					vrednostB = stoi(trazeni_broj);
+					if (int_vrednosti) {
+						vrednostB = stoi(trazeni_broj);
+					}
+					else {
+						vrednostB = stod(trazeni_broj);
+					}
 					break;
 				}
 				cout << "Igrac B je na redu, unesite vase resenje: " << endl;
@@ -129,10 +169,21 @@ int main() {
 					if (c == '*' || c == '/' || c == '+' || c == '-' || c == '(' || c == ')' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {
 						unos_igracB += c;
 					}
+					if (!int_vrednosti && c == '.') {
+						unos_igracB += c;
+					}
 				}
 				//racunamo vrednost izraza
-				vrednostB = kalkulator.izracunaj_k(unos_igracB);
-				if (vrednostB != 999999999) {
+				if (int_vrednosti) {
+					vrednostB = kalkulator.izracunaj_k(unos_igracB);
+				}
+				else {
+					vrednostBd = kalkulator_d.izracunaj_k(unos_igracB);
+				}
+				if (int_vrednosti && vrednostB != 999999999) {
+					break;
+				}
+				if (!int_vrednosti && vrednostBd != 999999999) {
 					break;
 				}
 				else {
@@ -151,10 +202,21 @@ int main() {
 					if (c == '*' || c == '/' || c == '+' || c == '-' || c == '(' || c == ')' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {
 						unos_igracB += c;
 					}
+					if (!int_vrednosti && c == '.') {
+						unos_igracB += c;
+					}
 				}
 				//racunamo vrednost izraza
-				vrednostB = kalkulator.izracunaj_k(unos_igracB);
-				if (vrednostB != 999999999) {
+				if (int_vrednosti) {
+					vrednostB = kalkulator.izracunaj_k(unos_igracB);
+				}
+				else {
+					vrednostBd = kalkulator_d.izracunaj_k(unos_igracB);
+				}
+				if (int_vrednosti && vrednostB != 999999999) {
+					break;
+				}
+				if (!int_vrednosti && vrednostBd != 999999999) {
 					break;
 				}
 				else {
@@ -164,7 +226,12 @@ int main() {
 			while (true)
 			{
 				if (vrednostB == 5555555) {
-					vrednostA = stoi(trazeni_broj);
+					if (int_vrednosti) {
+						vrednostA = stoi(trazeni_broj);
+					}
+					else {
+						vrednostA = stod(trazeni_broj);
+					}
 					break;
 				}
 				cout << "Igrac A je na redu, unesite vase resenje: " << endl;
@@ -175,10 +242,21 @@ int main() {
 					if (c == '*' || c == '/' || c == '+' || c == '-' || c == '(' || c == ')' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9') {
 						unos_igracA += c;
 					}
+					if (!int_vrednosti && c == '.') {
+						unos_igracA += c;
+					}
 				}
 				//racunamo vrednost izraza
-				vrednostA = kalkulator.izracunaj_k(unos_igracA);
-				if (vrednostA != 999999999) {
+				if (int_vrednosti) {
+					vrednostA = kalkulator.izracunaj_k(unos_igracA);
+				}
+				else {
+					vrednostAd = kalkulator_d.izracunaj_k(unos_igracA);
+				}
+				if (int_vrednosti && vrednostA != 999999999) {
+					break;
+				}
+				if (!int_vrednosti && vrednostAd != 999999999) {
 					break;
 				}
 				else {
@@ -191,64 +269,125 @@ int main() {
 		//ako je nekood igraca nasao tacno resenje nece ni traziti vec uzima to
 		cout << endl << "Kompjuter racuna..." << endl << endl;
 		string resenje = "";
-		if (vrednostA == stoi(trazeni_broj) && vrednostB != 5555555) {
-			resenje += unos_igracA;
-		}
-		else if (vrednostB == stoi(trazeni_broj) && vrednostA != 5555555) {
-			resenje += unos_igracB;
+		string vrednostK = "";
+		if (int_vrednosti) {
+			if (vrednostA == stoi(trazeni_broj) && vrednostB != 5555555) {
+				resenje += unos_igracA;
+			}
+			else if (vrednostB == stoi(trazeni_broj) && vrednostA != 5555555) {
+				resenje += unos_igracB;
+			}
+			else {
+				resenje = izracunaj(ponudjeni_brojevi, trazeni_broj, kalkulator);
+			}
+			if (resenje != "") {
+				vrednostK = to_string(kalkulator.izracunaj_k(resenje));
+			}
+			else {
+				vrednostK = to_string(kalkulator.najblize);
+			}
 		}
 		else {
-			resenje = izracunaj(ponudjeni_brojevi, trazeni_broj, kalkulator);
+			if (vrednostAd == stod(trazeni_broj) && vrednostBd != 5555555) {
+				resenje += unos_igracA;
+			}
+			else if (vrednostBd == stod(trazeni_broj) && vrednostAd != 5555555) {
+				resenje += unos_igracB;
+			}
+			else {
+				resenje = izracunaj_d(ponudjeni_brojevi_d, trazeni_broj, kalkulator_d);
+			}
+			if (resenje != "") {
+				vrednostK = to_string(kalkulator_d.izracunaj_k(resenje));
+			}
+			else {
+				vrednostK = to_string(kalkulator_d.najblize);
+			}
 		}
-		int vrednostK;
-		if (resenje != "") {
-			vrednostK = kalkulator.izracunaj_k(resenje);
-		}
-		else {
-			vrednostK = kalkulator.najblize;
-		}
+		if (int_vrednosti) {
 		cout << "Izraz koji je kompjuter pronasao je: " << kalkulator.najblizi_izraz << endl;
+		}
+		else {
+
+			cout << "Izraz koji je kompjuter pronasao je: " << kalkulator_d.najblizi_izraz << endl;
+		}
 		cout << "Vrednost ovog izraza je " << vrednostK << endl;
 
 		//provera ko je blizi i upisivanje u fajl
 		string pobednik = "";
-		if (vrednostA == 5555555) {
-			pobednik += "igrac B";
-			broj_pobedaB++;
-			vrednostA = 0;
-		}
-		else if (vrednostB == 5555555) {
-			pobednik += "igrac A";
-			broj_pobedaA++;
-			vrednostB = 0;
-		}
-		else if (abs(stoi(trazeni_broj) - vrednostA) < abs(stoi(trazeni_broj) - vrednostB)) {
-			pobednik += "igrac A";
-			broj_pobedaA++;
-		}
-		else if (abs(stoi(trazeni_broj) - vrednostA) > abs(stoi(trazeni_broj) - vrednostB)) {
-			pobednik += "igrac B";
-			broj_pobedaB++;
-		}
-		else if (igracA) {
-			pobednik += "igrac A";
-			broj_pobedaA++;
+		if (int_vrednosti) {
+			if (vrednostA == 5555555) {
+				pobednik += "igrac B";
+				broj_pobedaB++;
+				vrednostA = 0;
+			}
+			else if (vrednostB == 5555555) {
+				pobednik += "igrac A";
+				broj_pobedaA++;
+				vrednostB = 0;
+			}
+			else if (abs(stoi(trazeni_broj) - vrednostA) < abs(stoi(trazeni_broj) - vrednostB)) {
+				pobednik += "igrac A";
+				broj_pobedaA++;
+			}
+			else if (abs(stoi(trazeni_broj) - vrednostA) > abs(stoi(trazeni_broj) - vrednostB)) {
+				pobednik += "igrac B";
+				broj_pobedaB++;
+			}
+			else if (igracA) {
+				pobednik += "igrac A";
+				broj_pobedaA++;
+			}
+			else {
+				pobednik += "igrac B";
+				broj_pobedaB++;
+			}
 		}
 		else {
+			if(vrednostAd == 5555555) {
+				pobednik += "igrac B";
+				broj_pobedaB++;
+				vrednostAd = 0;
+			}
+			else if (vrednostBd == 5555555) {
+			pobednik += "igrac A";
+			broj_pobedaA++;
+			vrednostBd = 0;
+			}
+			else if (abs(stod(trazeni_broj) - vrednostAd) < abs(stod(trazeni_broj) - vrednostBd)) {
+			pobednik += "igrac A";
+			broj_pobedaA++;
+			}
+			else if (abs(stod(trazeni_broj) - vrednostAd) > abs(stod(trazeni_broj) - vrednostBd)) {
 			pobednik += "igrac B";
 			broj_pobedaB++;
+			}
+			else if (igracA) {
+			pobednik += "igrac A";
+			broj_pobedaA++;
+			}
+			else {
+			pobednik += "igrac B";
+			broj_pobedaB++;
+			}
 		}
 		ofstream fajl_rezultati("Rezultati.txt", ios::app);
 		cout << "Pobednik ove runde je " << pobednik << endl << endl << endl;
 		string upis = "Broj runde: " + to_string(broj_runde) + "\nDostupni podaci: " + dostupni_brojevi;
 		upis += "\nTrazeni broj: " + trazeni_broj;
-		upis += "\nIgrac A je dobio vrednost " + to_string(vrednostA) + " koja odsutpa od trazenog za " + to_string(abs(stoi(trazeni_broj) - vrednostA));
-		upis += "\nIgrac B je dobio vrednost " + to_string(vrednostB) + " koja odsutpa od trazenog za " + to_string(abs(stoi(trazeni_broj) - vrednostB));
+		if (int_vrednosti) {
+			upis += "\nIgrac A je dobio vrednost " + to_string(vrednostA) + " koja odsutpa od trazenog za " + to_string(abs(stoi(trazeni_broj) - vrednostA));
+			upis += "\nIgrac B je dobio vrednost " + to_string(vrednostB) + " koja odsutpa od trazenog za " + to_string(abs(stoi(trazeni_broj) - vrednostB));
+		}
+		else {
+			upis += "\nIgrac A je dobio vrednost " + to_string(vrednostAd) + " koja odsutpa od trazenog za " + to_string(abs(stod(trazeni_broj) - vrednostAd));
+			upis += "\nIgrac B je dobio vrednost " + to_string(vrednostBd) + " koja odsutpa od trazenog za " + to_string(abs(stod(trazeni_broj) - vrednostBd));
+		}
 		upis += "\nIzraz igraca A je " + unos_igracA;
 		upis += "\nIzraz igraca B je " + unos_igracB;
 		upis += "\nRundu je dobio " + pobednik;
 		upis += "\nIzraz koji je kompjuter dobio je " + resenje;
-		upis += "\nVrednost resenja koje je dobio kompjuter je " + to_string(vrednostK) + "\n\n\n";
+		upis += "\nVrednost resenja koje je dobio kompjuter je " + vrednostK + "\n\n\n";
 		fajl_rezultati << upis;
 		fajl_rezultati.close();
 		//podesavanje promenljivih za sledecu rundu
@@ -275,8 +414,9 @@ int main() {
 	else {
 		upis += "/nIGRA JE IZJEDNACENA!";
 	}
-	fajl_rezultati << upis;
-	fajl_rezultati.close();
+	ofstream fajl_rezultati1("Rezultati.txt", ios::app);
+	fajl_rezultati1 << upis;
+	fajl_rezultati1.close();
 
 	//keep_window_open();
 	//ovo iznad ne bih da obrisem jer nekad ov sysem("pause") samo odluci da ne radi 10 min pa tad koristim keep window open

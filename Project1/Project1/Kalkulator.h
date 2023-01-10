@@ -13,6 +13,7 @@ class Kalkulator {
 private:
 	T brojevi[6];
 	T trenutni;
+	bool da_li_su_intovi;
 public:
 	Kalkulator();
 	Kalkulator(T broj, T brojevi[6]);

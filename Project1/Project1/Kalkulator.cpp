@@ -10,7 +10,7 @@ using namespace std;
 #define vector Vector
 
 template<typename T>
-Kalkulator<T>::Kalkulator() : trazeno(T()), brojevi{ T(), T(), T(), T(), T(), T() }, najblize(T()), najblizi_izraz(""), trenutni(T()) { };
+Kalkulator<T>::Kalkulator() : trazeno(T()), brojevi{ T(), T(), T(), T(), T(), T() }, najblize(T()), najblizi_izraz(""), trenutni(T()), da_li_su_intovi(true) { };
 
 template<typename T>
 Kalkulator<T>::Kalkulator(T broj, T brojici[6])
@@ -25,6 +25,15 @@ Kalkulator<T>::Kalkulator(T broj, T brojici[6])
 	najblize = T();
 	najblizi_izraz = "";
 	trenutni = T();
+	da_li_su_intovi = true;
+	for (int i = 0; i < 6; i++) {
+		string stringic = to_string(brojici[i]);
+		for (char c : stringic) {
+			if (c == '.') {
+				da_li_su_intovi = false;
+			}
+		}
+	}
 };
 
 //izraz mora biti sacinjen iskljucivo iz brojeva, operanada +, - , * i / i zagrada
@@ -32,12 +41,9 @@ Kalkulator<T>::Kalkulator(T broj, T brojici[6])
 template<typename T>
 T Kalkulator<T>::izracunaj_k(string stringic) {
 
-	//izbacujemo prvo izraze koji su predugacki i izraze koji sadrze nesto osim brojeva, operanada i zagrada
-	if ((stringic.length() > 20)||(stringic.length() <=0)) {
-		return 999999999;
-	}
+	//izbacujemo izraze koji sadrze nesto osim brojeva, operanada i zagrada
 	for (char c : stringic) {
-		if (c != '*'&&c != '/'&&c != '+'&&c != '-'&&c != '('&&c != ')'&&c != '0'&&c != '1'&&c != '2'&&c != '3'&&c != '4'&&c != '5'&&c != '6'&&c != '7'&&c != '8'&&c != '9') {
+		if (c != '*'&&c != '/'&&c != '+'&&c != '-'&&c != '('&&c != ')'&&c != '0'&&c != '1'&&c != '2'&&c != '3'&&c != '4'&&c != '5'&&c != '6'&&c != '7'&&c != '8'&&c != '9'&&c!='.') {
 			return 999999999;
 		}
 	}
@@ -47,7 +53,7 @@ T Kalkulator<T>::izracunaj_k(string stringic) {
 	for (int i = 0; i < 6; i++) {
 		brojici[i] = double(brojevi[i]);
 	}
-	trenutni = iskalkulisi(stringic, brojici);
+	trenutni = iskalkulisi(stringic, brojici, da_li_su_intovi);
 	if (abs(trenutni - trazeno) < abs(najblize - trazeno)) {
 		najblize = trenutni;
 		najblizi_izraz = stringic;
