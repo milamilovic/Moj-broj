@@ -9,6 +9,7 @@ int main() {
 	cout << "          -------TESTIRANJE MODULA ZA SRACUNAVANJE-------          " << endl << endl;
 	int broj_prodjenih_testova = 0;
 	int ukupan_broj_testova = 0;
+	//prvo testiramo koriscenje integer vrednosti
 	vector<string> izrazi;
 	izrazi.push_back("3+2+9+7+16+88");
 	izrazi.push_back("18/9+7");
@@ -54,7 +55,40 @@ int main() {
 			cout << "Test " << i << " nije uspesan." << endl << endl;
 		}
 	}
+
+	//testiranje double  vrednosti
+	izrazi.clear();
+	izrazi.push_back("9.2/2.5");
+	izrazi.push_back("6.1*8.4");
+	izrazi.push_back("17.0/(3.1+5.4)");
+	double ponudjeni_brojevi_d[3][6] = {{ 9.2, 2.5, 9.1, 7.6, 16.0, 88.2 },
+									{ 6.1, 8.4, 5.5, 3.0, 18.3, 55.2 },
+									{ 2.1, 3.1, 5.4, 5.0, 17.0, 88 }};
+	ocekivana_resenja.clear();
+	ocekivana_resenja.push_back("3.68");
+	ocekivana_resenja.push_back("51.24");
+	ocekivana_resenja.push_back("2");
+	cout << endl << "Testiranje double vrednosti: " << endl;
+
+	for (int i = 1; i <= int(izrazi.size()); i++) {
+		ukupan_broj_testova++;
+		cout << "TEST 2." << i << endl;
+		cout << "Izraz: " << izrazi.at(i - 1) << endl;
+		cout << "Ocekivana vrednost: " << ocekivana_resenja.at(i - 1) << endl;
+		double resenje = iskalkulisi(izrazi.at(i - 1), ponudjeni_brojevi_d[i - 1], false);
+		cout << "Dobijeno resenje: " << resenje << endl;
+		//postoji mala tolerancija zbog fizickih ogranicenja racunara
+		if (abs(stod(ocekivana_resenja.at(i - 1)) - resenje)<0.01) {
+			cout << "Test " << i << " je uspesan." << endl << endl;
+			broj_prodjenih_testova++;
+		}
+		else {
+			cout << "Test " << i << " nije uspesan." << endl << endl;
+		}
+	}
 	cout << endl << "Od ukupno " << ukupan_broj_testova << " testova uspesno je proslo " << broj_prodjenih_testova << endl << endl;
+	
+	
 	//testiranje modula za pronalazenje resenja
 	//podrazumeva da sracunavanje radi
 	//treba da damo ulazne brojeve a on treba da nadje zeljeno resenje
