@@ -156,9 +156,6 @@ int main() {
 					if (int_vrednosti) {
 						vrednostB = stoi(trazeni_broj);
 					}
-					else {
-						vrednostB = stod(trazeni_broj);
-					}
 					break;
 				}
 				cout << "Igrac B je na redu, unesite vase resenje: " << endl;
@@ -229,9 +226,6 @@ int main() {
 					if (int_vrednosti) {
 						vrednostA = stoi(trazeni_broj);
 					}
-					else {
-						vrednostA = stod(trazeni_broj);
-					}
 					break;
 				}
 				cout << "Igrac A je na redu, unesite vase resenje: " << endl;
@@ -288,10 +282,10 @@ int main() {
 			}
 		}
 		else {
-			if (vrednostAd == stod(trazeni_broj) && vrednostBd != 5555555) {
+			if (vrednostAd == stod(trazeni_broj)) {
 				resenje += unos_igracA;
 			}
-			else if (vrednostBd == stod(trazeni_broj) && vrednostAd != 5555555) {
+			else if (vrednostBd == stod(trazeni_broj)) {
 				resenje += unos_igracB;
 			}
 			else {

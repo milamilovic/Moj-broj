@@ -167,7 +167,8 @@ double Token_stream::term()
 		{
 			double d = primary();
 			if (d == 0) throw exception("divide by zero");
-			if (fmod(left,d) != 0) {
+			//ako su integeri i nisu deljivi nije validno
+			if (fmod(left,d) != 0 && da_li_je_int) {
 				throw domain_error("Not divisable");
 				return 5555555;
 			}
@@ -223,8 +224,6 @@ try
 	}
 	double val = 0;
 	ts = Token_stream(izraz);        // provides nabavi() and vrati() 
-	// cin >> val >> c;
-	// cout << val << endl << c;
 	while (ts.index < izraz.length()) {
 		Token t = ts.nabavi();
 		if (t.kind == '\0') return val;
