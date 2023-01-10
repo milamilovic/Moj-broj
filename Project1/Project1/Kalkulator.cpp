@@ -9,28 +9,33 @@ using namespace std;
 
 #define vector Vector
 
-//konstruktori
-Kalkulator::Kalkulator() : trazeno(0), brojevi{ 0, 0, 0, 0, 0, 0 }, najblize(0), najblizi_izraz(""), trenutni(0){};
+template<typename T>
+Kalkulator<T>::Kalkulator() : trazeno(T()), brojevi{ T(), T(), T(), T(), T(), T() }, najblize(T()), najblizi_izraz(""), trenutni(T()) { };
 
-Kalkulator::Kalkulator(int broj, int brojevi[6]) {
-	this->trazeno = broj;
-	this->brojevi[0] = brojevi[0];
-	this->brojevi[1] = brojevi[1];
-	this->brojevi[2] = brojevi[2];
-	this->brojevi[3] = brojevi[3];
-	this->brojevi[4] = brojevi[4];
-	this->brojevi[5] = brojevi[5];
-	this->najblize = 0;
-	this->najblizi_izraz = "";
-	this->trenutni = 0;
+template<typename T>
+Kalkulator<T>::Kalkulator(T broj, T brojici[6])
+{
+	trazeno = broj;
+	cout << brojici[0] << endl;
+	this->brojevi[0] = brojici[0];
+	cout << brojevi[0] << endl;
+	this->brojevi[1] = brojici[1];
+	this->brojevi[2] = brojici[2];
+	this->brojevi[3] = brojici[3];
+	this->brojevi[4] = brojici[4];
+	this->brojevi[5] = brojici[5];
+	najblize = T();
+	najblizi_izraz = "";
+	trenutni = T();
 };
 
 //izraz mora biti sacinjen iskljucivo iz brojeva, operanada +, - , * i / i zagrada
 //inace se vraca vrednost 999999999 koja oznacava nevalidan izraz
-int Kalkulator::izracunaj(string stringic) {
+template<typename T>
+T Kalkulator<T>::izracunaj_k(string stringic) {
 
 	//izbacujemo prvo izraze koji su predugacki i izraze koji sadrze nesto osim brojeva, operanada i zagrada
-	if ((stringic.length() > 20) || (stringic.length() <= 0)) {
+	if ((stringic.length() > 20)||(stringic.length() <=0)) {
 		return 999999999;
 	}
 	for (char c : stringic) {
@@ -40,11 +45,10 @@ int Kalkulator::izracunaj(string stringic) {
 	}
 
 	//sada racunamo izraz, za ovo koristim kod kalkulatora sa vezbi
-	trenutni = iskalkulisi(stringic, this->brojevi);
+	trenutni = iskalkulisi(stringic, brojevi);
 	if (abs(trenutni - trazeno) < abs(najblize - trazeno)) {
 		najblize = trenutni;
 		najblizi_izraz = stringic;
 	}
 	return trenutni;
-
 };

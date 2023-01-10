@@ -8,6 +8,8 @@
 #include <cstdlib>
 #include "std_lib_facilities.h"
 #include "funkcije.h"
+#include "Kalkulator.h"
+#include "Kalkulator.cpp"
 
 using namespace std;
 
@@ -86,7 +88,7 @@ int main() {
 		cout << "Trazeni broj: " << trazeni_broj << endl << endl;
 
 		//napravimo kalkulator za ovu rundu
-		Kalkulator kalkulator = Kalkulator(stoi(trazeni_broj), ponudjeni_brojevi);
+		Kalkulator<int> kalkulator = Kalkulator<int>(stoi(trazeni_broj), ponudjeni_brojevi);
 
 		//igraci unose svoje izraze i oni se odmah racunaju
 		int vrednostA;
@@ -104,7 +106,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostA = kalkulator.izracunaj(unos_igracA);
+				vrednostA = kalkulator.izracunaj_k(unos_igracA);
 				if (vrednostA != 999999999) {
 					break;
 				}
@@ -129,7 +131,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostB = kalkulator.izracunaj(unos_igracB);
+				vrednostB = kalkulator.izracunaj_k(unos_igracB);
 				if (vrednostB != 999999999) {
 					break;
 				}
@@ -151,7 +153,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostB = kalkulator.izracunaj(unos_igracB);
+				vrednostB = kalkulator.izracunaj_k(unos_igracB);
 				if (vrednostB != 999999999) {
 					break;
 				}
@@ -175,7 +177,7 @@ int main() {
 					}
 				}
 				//racunamo vrednost izraza
-				vrednostA = kalkulator.izracunaj(unos_igracA);
+				vrednostA = kalkulator.izracunaj_k(unos_igracA);
 				if (vrednostA != 999999999) {
 					break;
 				}
@@ -200,7 +202,7 @@ int main() {
 		}
 		int vrednostK;
 		if (resenje != "") {
-			vrednostK = kalkulator.izracunaj(resenje);
+			vrednostK = kalkulator.izracunaj_k(resenje);
 		}
 		else {
 			vrednostK = kalkulator.najblize;

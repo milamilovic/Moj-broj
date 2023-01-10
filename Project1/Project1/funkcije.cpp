@@ -1,4 +1,5 @@
 #include "funkcije.h"
+#include "Kalkulator.cpp"
 
 
 template<class _Tnumber, class _Titerator >
@@ -33,7 +34,7 @@ bool sadrzi_zagrade;
 bool racunaj = false;
 //funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
 //i sve varijante operanada medju njima
-string izracunaj_sve_zagrade(vector<int> dostupni_brojevi, Kalkulator& k) {
+string izracunaj_sve_zagrade(vector<int> dostupni_brojevi, Kalkulator<int>& k) {
 	int broj_operacija = dostupni_brojevi.size() + 1;
 	int min = 0;
 	int max = 3;
@@ -110,7 +111,7 @@ string izracunaj_sve_zagrade(vector<int> dostupni_brojevi, Kalkulator& k) {
 						}
 					}
 				}
-				dobijeni_broj = k.izracunaj(stringic);
+				dobijeni_broj = k.izracunaj_k(stringic);
 				if (dobijeni_broj == k.trazeno) {
 					return stringic;
 				}
@@ -124,7 +125,7 @@ string operacije = "+-*/";
 string zagrade = "()";
 //funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
 //i sve varijante operanada medju njima
-string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator& k) {
+string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator<int>& k) {
 	int broj_operacija = dostupni_brojevi.size() - 1;
 	int min = 0;
 	int max = 3;
@@ -147,7 +148,7 @@ string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator& k) {
 					stringic += operacije[int(indexi[i]) - 48];
 				}
 			}
-			dobijeni_broj = k.izracunaj(stringic);
+			dobijeni_broj = k.izracunaj_k(stringic);
 			if (dobijeni_broj == k.trazeno) {
 				return stringic;
 			}
@@ -156,7 +157,7 @@ string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator& k) {
 	return "";
 }
 
-string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalkulator) {
+string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<int>& kalkulator) {
 	string resenje = "";
 	vector<int>dostupni_brojevi_vektor;
 	for (int i = 0; i < 6; i++) {
@@ -183,7 +184,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 		//ova funkcija ispituje sve moguce permutacije ovih brojeva (ispituje i sve varijante operanada)
 		string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
 		int eliminisani_broj4 = 9999;
-		if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+		if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 			resenje += izraz;
 			break;
 		}
@@ -202,7 +203,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 				//dakle kombinacije sa 4 broja
 				string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
 				int eliminisani_broj3 = 9999;
-				if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+				if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 					resenje += izraz;
 					break;
 				}
@@ -220,7 +221,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 						//dakle kombinacije sa 3 broja
 						string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
 						int eliminisani_broj2 = 9999;
-						if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+						if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 							resenje += izraz;
 							break;
 						}
@@ -237,7 +238,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 								dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + l);
 								//dakle kombinacije sa 2 broja
 								string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
-								if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+								if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 									resenje += izraz;
 									break;
 								}
@@ -255,7 +256,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 	//proverimo kombinacije sa 6 brojeva
 	if (resenje == "") {
 		string izraz = izracunaj_sve(dostupni_brojevi_vektor, kalkulator);
-		if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+		if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 			resenje += izraz;
 		}
 	}
@@ -281,7 +282,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 			//ova funkcija ispituje sve moguce permutacije ovih brojeva (ispituje i sve varijante operanada)
 			string izraz = izracunaj_sve_zagrade(dostupni_brojevi_vektor, kalkulator);
 			int eliminisani_broj4 = 9999;
-			if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+			if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 				resenje += izraz;
 				break;
 			}
@@ -300,7 +301,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 					//dakle kombinacije sa 4 broja
 					string izraz = izracunaj_sve_zagrade(dostupni_brojevi_vektor, kalkulator);
 					int eliminisani_broj3 = 9999;
-					if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+					if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 						resenje += izraz;
 						break;
 					}
@@ -318,7 +319,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 							//dakle kombinacije sa 3 broja
 							string izraz = izracunaj_sve_zagrade(dostupni_brojevi_vektor, kalkulator);
 							int eliminisani_broj2 = 9999;
-							if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+							if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 								resenje += izraz;
 								break;
 							}
@@ -335,7 +336,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 									dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + l);
 									//dakle kombinacije sa 2 broja
 									string izraz = izracunaj_sve_zagrade(dostupni_brojevi_vektor, kalkulator);
-									if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+									if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 										resenje += izraz;
 										break;
 									}
@@ -353,7 +354,7 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator& kalk
 		//proverimo kombinacije sa 6 brojeva
 		if (resenje == "") {
 			string izraz = izracunaj_sve_zagrade(dostupni_brojevi_vektor, kalkulator);
-			if (kalkulator.izracunaj(izraz) == stoi(trazeni_broj)) {
+			if (kalkulator.izracunaj_k(izraz) == stoi(trazeni_broj)) {
 				resenje += izraz;
 			}
 		}
