@@ -8,9 +8,9 @@
 class Token {
 public:
 	char kind;        // what kind of token
-	int value;     // for numbers: a value 
+	double value;     // for numbers: a value 
 	Token(char ch);
-	Token(char ch, int val);
+	Token(char ch, double val);
 	Token(const Token &t);
 };
 
@@ -22,14 +22,14 @@ public:
 	Token_stream(string izraz);   // make a Token_stream that reads from string
 	Token nabavi();      // nabavi a Token (nabavi() is defined elsewhere)
 	void vrati(Token t);    // put a Token back
-	int index;
-	int expression();    // declaration so that primary() can call expression()
-	int primary();
-	int term();
+	double index;
+	double expression();    // declaration so that primary() can call expression()
+	double primary();
+	double term();
 private:
 	bool full;        // is there a Token in the buffer?
 	Token buffer;     // here is where we keep a Token put back using vrati()
 	string izraz;
 };
 
-int iskalkulisi(string izraz, int brojevi[6]);
+double iskalkulisi(string izraz, double brojevi[6]);

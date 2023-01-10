@@ -43,7 +43,11 @@ T Kalkulator<T>::izracunaj_k(string stringic) {
 	}
 
 	//sada racunamo izraz, za ovo koristim kod kalkulatora sa vezbi
-	trenutni = iskalkulisi(stringic, brojevi);
+	double brojici[6] = {0,0,0,0,0,0};
+	for (int i = 0; i < 6; i++) {
+		brojici[i] = double(brojevi[i]);
+	}
+	trenutni = iskalkulisi(stringic, brojici);
 	if (abs(trenutni - trazeno) < abs(najblize - trazeno)) {
 		najblize = trenutni;
 		najblizi_izraz = stringic;

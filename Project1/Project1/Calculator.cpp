@@ -4,12 +4,12 @@
 #include "Calculator.h"
 
 Token_stream ts;
-int nums[6];
+double nums[6];
 
 Token::Token(char ch)    // make a Token from a char
 	:kind(ch), value(0) { }
 
-Token::Token(char ch, int val)     // make a Token from a char and a double
+Token::Token(char ch, double val)     // make a Token from a char and a double
 	: kind(ch), value(val) { }
 
 Token::Token(const Token &t)
@@ -64,11 +64,11 @@ Token Token_stream::nabavi()
 	case '5': case '6': case '7': case '8': case '9':
 	{
 		//procitaj broj
-		int val = int(ch) - int('0');
+		double val = double(ch) - double('0');
 		char drugi = izraz[index];
 		if (drugi != '*'&&drugi != '/'&&drugi != '+'&&drugi != '-'&&drugi != '('&&drugi != ')'&&drugi != '\0') {
 			val *= 10;
-			val += int(drugi) - int('0');
+			val += double(drugi) - double('0');
 			index++;
 			//ako udje u ovaj if onda je prosledjen trocifreni broj sto nije validno
 			if (izraz[index] == '0' || izraz[index] == '1' || izraz[index] == '2' || izraz[index] == '3' || izraz[index] == '4' || izraz[index] == '5' || izraz[index] == '6' || izraz[index] == '7' || izraz[index] == '8' || izraz[index] == '9') {
@@ -99,13 +99,13 @@ Token Token_stream::nabavi()
 }
 
 // deal with numbers and parentheses
-int Token_stream::primary()
+double Token_stream::primary()
 {
 	Token t = nabavi();
 	switch (t.kind) {
 	case '(':    // handle '(' expression ')'
 	{
-		int d = expression();
+		double d = expression();
 		t = nabavi();
 		if (t.kind != ')') error("')' expected");
 		t = nabavi();
@@ -126,9 +126,9 @@ int Token_stream::primary()
 //------------------------------------------------------------------------------
 
 // deal with *, /, and %
-int Token_stream::term()
+double Token_stream::term()
 {
-	int left = primary();
+	double left = primary();
 	Token t = nabavi();        // nabavi the next token from token stream
 
 	while (true) {
@@ -139,9 +139,9 @@ int Token_stream::term()
 			break;
 		case '/':
 		{
-			int d = primary();
+			double d = primary();
 			if (d == 0) throw exception("divide by zero");
-			if (left%d != 0) {
+			if (fmod(left,d) != 0) {
 				throw domain_error("Not divisable");
 				return 5555555;
 			}
@@ -164,9 +164,9 @@ int Token_stream::term()
 //------------------------------------------------------------------------------
 
 // deal with + and -
-int Token_stream::expression()
+double Token_stream::expression()
 {
-	int left = term();      // read and evaluate a Term
+	double left = term();      // read and evaluate a Term
 	Token t = nabavi();        // nabavi the next token from token stream
 
 	while (true) {
@@ -188,13 +188,13 @@ int Token_stream::expression()
 
 //------------------------------------------------------------------------------
 
-int iskalkulisi(string izraz, int brojevi[6])
+double iskalkulisi(string izraz, double brojevi[6])
 try
 {
 	for (int i = 0; i < 6; i++) {
 		nums[i] = brojevi[i];
 	}
-	int val;
+	double val;
 	ts = Token_stream(izraz);        // provides nabavi() and vrati() 
 	// cin >> val >> c;
 	// cout << val << endl << c;
