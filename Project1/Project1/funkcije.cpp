@@ -459,7 +459,7 @@ string izracunaj_sve_zagrade_d(vector<double> dostupni_brojevi, Kalkulator<doubl
 					}
 				}
 				dobijeni_broj_d = k.izracunaj_k(stringic);
-				if (dobijeni_broj_d == k.trazeno) {
+				if (abs(dobijeni_broj_d - k.trazeno)<0.01) {
 					return stringic;
 				}
 			}
@@ -505,7 +505,7 @@ string izracunaj_sve_d(vector<double> dostupni_brojevi, Kalkulator<double>& k) {
 				}
 			}
 			dobijeni_broj_d = k.izracunaj_k(stringic);
-			if (dobijeni_broj_d == k.trazeno) {
+			if (abs(dobijeni_broj_d - k.trazeno)<0.01) {
 				return stringic;
 			}
 		} while (next_variation<double>(indexi.begin(), indexi.end(), '4', '0'));
@@ -530,7 +530,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 			dostupni_brojevi_vektor.insert(dostupni_brojevi_vektor.begin() + i - 1, eliminisani_broj5);
 		}
 		//ovde proverimo da li je jedan od ponudjenih brojeva ujedno i resenje
-		if (ponudjeni_brojevi[i] == stod(trazeni_broj)) {
+		if (abs(ponudjeni_brojevi[i] - stod(trazeni_broj)) < 0.01) {
 			resenje += to_string(ponudjeni_brojevi[i]);
 			break;
 		}
@@ -540,7 +540,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 		//ova funkcija ispituje sve moguce permutacije ovih brojeva (ispituje i sve varijante operanada)
 		string izraz = izracunaj_sve_d(dostupni_brojevi_vektor, kalkulator);
 		double eliminisani_broj4 = 9999;
-		if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+		if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 			resenje += izraz;
 			break;
 		}
@@ -559,7 +559,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 				//dakle kombinacije sa 4 broja
 				string izraz = izracunaj_sve_d(dostupni_brojevi_vektor, kalkulator);
 				double eliminisani_broj3 = 9999;
-				if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+				if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 					resenje += izraz;
 					break;
 				}
@@ -577,7 +577,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 						//dakle kombinacije sa 3 broja
 						string izraz = izracunaj_sve_d(dostupni_brojevi_vektor, kalkulator);
 						double eliminisani_broj2 = 9999;
-						if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+						if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 							resenje += izraz;
 							break;
 						}
@@ -594,7 +594,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 								dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + l);
 								//dakle kombinacije sa 2 broja
 								string izraz = izracunaj_sve_d(dostupni_brojevi_vektor, kalkulator);
-								if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+								if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj))<0.01) {
 									resenje += izraz;
 									break;
 								}
@@ -612,7 +612,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 	//proverimo kombinacije sa 6 brojeva
 	if (resenje == "") {
 		string izraz = izracunaj_sve_d(dostupni_brojevi_vektor, kalkulator);
-		if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+		if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 			resenje += izraz;
 		}
 	}
@@ -638,7 +638,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 			//ova funkcija ispituje sve moguce permutacije ovih brojeva (ispituje i sve varijante operanada)
 			string izraz = izracunaj_sve_zagrade_d(dostupni_brojevi_vektor, kalkulator);
 			double eliminisani_broj4 = 9999;
-			if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+			if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 				resenje += izraz;
 				break;
 			}
@@ -657,7 +657,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 					//dakle kombinacije sa 4 broja
 					string izraz = izracunaj_sve_zagrade_d(dostupni_brojevi_vektor, kalkulator);
 					double eliminisani_broj3 = 9999;
-					if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+					if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 						resenje += izraz;
 						break;
 					}
@@ -675,7 +675,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 							//dakle kombinacije sa 3 broja
 							string izraz = izracunaj_sve_zagrade_d(dostupni_brojevi_vektor, kalkulator);
 							double eliminisani_broj2 = 9999;
-							if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+							if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 								resenje += izraz;
 								break;
 							}
@@ -692,7 +692,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 									dostupni_brojevi_vektor.erase(dostupni_brojevi_vektor.begin() + l);
 									//dakle kombinacije sa 2 broja
 									string izraz = izracunaj_sve_zagrade_d(dostupni_brojevi_vektor, kalkulator);
-									if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+									if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 										resenje += izraz;
 										break;
 									}
@@ -710,7 +710,7 @@ string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<
 		//proverimo kombinacije sa 6 brojeva
 		if (resenje == "") {
 			string izraz = izracunaj_sve_zagrade_d(dostupni_brojevi_vektor, kalkulator);
-			if (kalkulator.izracunaj_k(izraz) == stod(trazeni_broj)) {
+			if (abs(kalkulator.izracunaj_k(izraz) - stod(trazeni_broj)) < 0.01) {
 				resenje += izraz;
 			}
 		}
