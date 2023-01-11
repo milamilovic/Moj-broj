@@ -1,6 +1,6 @@
 //ovaj program sluzi za igranje igre ,,Moj broj" u paru
 //Autor: Mila Milovic SV22-2021
-//Datum poslednje izmene: 08.01.2023.
+//Datum poslednje izmene: 11.01.2023.
 //u ovom fajlu se nalazi pomocna funkcija za splitovanje reda koji se procita iz fajla
 //i main koji izvrsava igru
 #include <iostream>
@@ -34,7 +34,9 @@ vector<string> split(string s)
 }
 
 //main funkcija, ostvaruje komunikaciju sa igracima i poziva funkcije za izracunavanje
-int main() {
+//argument komandne linije je naziv fajla koji se otvara
+//ovo se moze promeniti sa desnim klikom na projekat, pa properties Conf. prop./Debugging --> Command arguments
+int main(int argc, char *argv[]) {
 	//upuststva za igrace
 	cout << "Dobro dosli u igru moj broj!" << endl;
 	cout << "Igra se igra u nekoliko rundi, u prvoj je prvi igrac igrac A, u drugoj igrac B i tako naizmenicno" << endl;
@@ -45,15 +47,17 @@ int main() {
 	cout << "Igra sada pocinje, srecno!" << endl << endl;
 
 	//ucitavamo podatke tj otvaramo fajl
-	string ime_fajla = "";
+	//ovo dole ispod treba otkomentarisati ako korisnik zeli da unese ime ulaznog unutar programa
+	//string ime_fajla = "";
+	string ime_fajla = argv[1];
 	ifstream in_stream;
 	while (true)
 	{
-		if (ime_fajla != "") {
+		/*if (ime_fajla != "") {
 			cerr << "GRESKA: pogresno ime ulaznog fajla! ";
 		}
 		cout << "Unesite ime ulaznog fajla: " << endl;
-		cin >> ime_fajla;
+		cin >> ime_fajla;*/
 		in_stream.open(ime_fajla);
 		if (in_stream.fail()) {
 			continue;

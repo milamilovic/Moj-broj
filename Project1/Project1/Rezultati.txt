@@ -1,15 +1,24 @@
 Broj runde: 1
-Dostupni podaci: 3.2 15.1 4.8 7.0 9.3 15.8 
-Trazeni broj: 216.18
-Igrac A je dobio vrednost 2.614286 koja odsutpa od trazenog za 213.565714
-Igrac B je dobio vrednost 9.300000 koja odsutpa od trazenog za 206.880000
-Izraz igraca A je (3.2+15.1)/7.0
-Izraz igraca B je 9.3
+Dostupni podaci: 4 7 1 9 25 32 
+Trazeni broj: 233
+Igrac A je dobio vrednost 4 koja odsutpa od trazenog za 229
+Igrac B je dobio vrednost 7 koja odsutpa od trazenog za 226
+Izraz igraca A je 4
+Izraz igraca B je 7
 Rundu je dobio igrac B
-Izraz koji je kompjuter dobio je 15.1*15.8-3.2*7.0
-Vrednost resenja koje je dobio kompjuter je 216.180000
+Izraz koji je kompjuter dobio je 7*32+9
+Vrednost resenja koje je dobio kompjuter je 233
 
 
-Broj pobeda igraca A je 0
-Broj pobeda igraca B je 1
-POBEDNIK CELE IGRE JE IGRAC B!
+Broj runde: 2
+Dostupni podaci: 6 9 4 1 19 65 
+Trazeni broj: 231
+Igrac A je dobio vrednost 6 koja odsutpa od trazenog za 225
+Igrac B je dobio vrednost 6 koja odsutpa od trazenog za 225
+Izraz igraca A je 6
+Izraz igraca B je 6
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 4*65-1-9-19
+Vrednost resenja koje je dobio kompjuter je 231
+
+
