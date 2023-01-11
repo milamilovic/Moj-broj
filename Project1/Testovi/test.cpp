@@ -183,7 +183,7 @@ int main() {
 		cout << "Dobijeno resenje: " << resenje_string << endl;
 		double vrednost_resenja = iskalkulisi(resenje_string, ponudjeni_brojevi_d[i - 1], false);
 		cout << "Vrednost dobijenog resenja je: " << vrednost_resenja << endl;
-		if (abs(stoi(ocekivana_resenja1.at(i - 1)) - vrednost_resenja) < 0.01) {
+		if (abs(stod(ocekivana_resenja1.at(i - 1)) - vrednost_resenja) < 0.01) {
 			cout << "Test " << i << " je uspesan." << endl << endl;
 			broj_prodjenih_testova++;
 		}

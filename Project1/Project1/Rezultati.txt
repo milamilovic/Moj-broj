@@ -13,12 +13,24 @@ Vrednost resenja koje je dobio kompjuter je 233
 Broj runde: 2
 Dostupni podaci: 6 9 4 1 19 65 
 Trazeni broj: 231
-Igrac A je dobio vrednost 6 koja odsutpa od trazenog za 225
+Igrac A je dobio vrednost 9 koja odsutpa od trazenog za 222
 Igrac B je dobio vrednost 6 koja odsutpa od trazenog za 225
-Izraz igraca A je 6
+Izraz igraca A je 9
 Izraz igraca B je 6
-Rundu je dobio igrac B
+Rundu je dobio igrac A
 Izraz koji je kompjuter dobio je 4*65-1-9-19
 Vrednost resenja koje je dobio kompjuter je 231
+
+
+Broj runde: 3
+Dostupni podaci: 3 5 7 9 41 11 
+Trazeni broj: 929
+Igrac A je dobio vrednost 3 koja odsutpa od trazenog za 926
+Igrac B je dobio vrednost 5 koja odsutpa od trazenog za 924
+Izraz igraca A je 3
+Izraz igraca B je 5
+Rundu je dobio igrac B
+Izraz koji je kompjuter dobio je 3(41-7)9+11
+Vrednost resenja koje je dobio kompjuter je 929
 
 
