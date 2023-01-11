@@ -1,5 +1,9 @@
-//simple calculator sa vezbi
-//izmenjeno malo da bi bilo prilagodjeno tome da se 
+//Autor: Mila Milovic SV22-2021
+//Datum poslednje izmene: 10.01.2023.
+//simple calculator sa vezbi definicije funkcija
+//izmenjeno malo da bi bilo prilagodjeno tome da se radi sa stringovima
+//funkcionalnost deljenja je razlicita za int u odnosu na double vrednosti
+//takodje je izmenjeno da racuna da je (4+1)7 = 35 tj ako nema operacije mnozi se
 #include "std_lib_facilities.h"
 #include "Calculator.h"
 

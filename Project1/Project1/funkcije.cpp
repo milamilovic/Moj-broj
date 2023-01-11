@@ -1,6 +1,10 @@
+//Autor: Mila Milovic SV22-2021
+//Datum poslednje izmene: 10.01.2023.
+//definicije funkcija koje generisu sve moguce izraze
+//postoje funkcije za racunanje varijacija brojeva, dodavanje svih 
+//operacija i dodavanje svih operacija i zagrada za int i za double vrednosti
 #include "funkcije.h"
 #include "Kalkulator.cpp"
-
 
 template<class _Tnumber, class _Titerator >
 bool next_variation

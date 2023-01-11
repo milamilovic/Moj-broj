@@ -1,3 +1,9 @@
+//Autor: Mila Milovic SV22-2021
+//Datum poslednje izmene: 09.01.2023.
+//definicije metoda klase kalkulator koja salje string na racunanje
+//najbolji izraz i njegovu vrednost pamti kao atribut
+//takodje pamti ponudjene brojeve
+//template klasa tako da radi sa bilo kojim tipom podataka
 #pragma once
 
 #ifndef _KALKULATOR_H_

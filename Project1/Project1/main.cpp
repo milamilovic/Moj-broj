@@ -1,6 +1,8 @@
 //ovaj program sluzi za igranje igre ,,Moj broj" u paru
-//autor Mila Milovic SV22/2021
-
+//Autor: Mila Milovic SV22-2021
+//Datum poslednje izmene: 08.01.2023.
+//u ovom fajlu se nalazi pomocna funkcija za splitovanje reda koji se procita iz fajla
+//i main koji izvrsava igru
 #include <iostream>
 #include <fstream>
 #include <sstream>

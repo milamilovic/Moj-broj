@@ -1,3 +1,9 @@
+//Autor: Mila Milovic SV22-2021
+//Datum poslednje izmene: 10.01.2023.
+//testovi za igru moj broj
+//testiraju se modul za sracunavanje sa int i double vrednostima
+//i modul za pronalazenje resenja takodje sa int i double vrednostima
+//test je potrebno samo pokrenuti, svi podaci ce biti ispisani na konzoli
 #include "..\Project1\Calculator.cpp"
 #include "..\Project1\funkcije.cpp"
 
