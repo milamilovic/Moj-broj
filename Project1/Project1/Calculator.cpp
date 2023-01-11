@@ -223,6 +223,13 @@ double Token_stream::expression()
 
 //------------------------------------------------------------------------------
 
+
+//funkcija koja poziva odgovarajuce metode definisane takodje u ovom fajlu
+//povratna vrednost je vrednost izraza koji daje tacno resenje ili 999999999 ukoliko izraz nije validan
+//ulazni argumenti su niz brojeva koji se koriste, string broja koji se trazi i boolean vrednost koja govori da li je
+//rec o int ili double vrednostima
+//funkcije iznad mogu da izazovu izuzetke (domain error za deljenje nedeljivih brojeva kod intova, a 
+//,,obican'' exception za ostale) koje ova funkcija hvata pa povratna vrednost bude 5555555 za domain error ili 999999999 za ostale
 double iskalkulisi(string izraz, double brojevi[6], bool int_vrednosti)
 try
 {

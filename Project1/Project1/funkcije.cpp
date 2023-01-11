@@ -6,6 +6,7 @@
 #include "funkcije.h"
 #include "Kalkulator.cpp"
 
+//funckija koja pronalazi narednu varijaciju
 template<class _Tnumber, class _Titerator >
 bool next_variation
 (
@@ -38,6 +39,8 @@ bool sadrzi_zagrade;
 bool racunaj = false;
 //funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
 //i sve varijante operanada medju njima
+//povratna vrednost je "" ukoliko ne postoji resenje ili string izraza koji daje tacno resenje
+//ulazni argumenti su vektor brojeva koji se koriste i odgovarajuci kalkulator
 string izracunaj_sve_zagrade(vector<int> dostupni_brojevi, Kalkulator<int>& k) {
 	int broj_operacija = dostupni_brojevi.size() + 1;
 	int min = 0;
@@ -129,6 +132,8 @@ string operacije = "+-*/";
 string zagrade = "()";
 //funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
 //i sve varijante operanada medju njima
+//povratna vrednost je "" ukoliko ne postoji resenje ili string izraza koji daje tacno resenje
+//ulazni argumenti su vektor brojeva koji se koriste i odgovarajuci kalkulator
 string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator<int>& k) {
 	int broj_operacija = dostupni_brojevi.size() - 1;
 	int min = 0;
@@ -161,6 +166,10 @@ string izracunaj_sve(vector<int> dostupni_brojevi, Kalkulator<int>& k) {
 	return "";
 }
 
+
+//funkcija koja generise sve kombinacije brojeva i salje ih funkcijama koje proveravaju sve kombinacije operacija
+//povratna vrednost je string izraza koji daje tacno resenje ili vrednost najblizu tacnom izrazu
+//ulazni argumenti su niz brojeva koji se koriste, string broja koji se trazi i odgovarajuci kalkulator
 string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<int>& kalkulator) {
 	string resenje = "";
 	vector<int>dostupni_brojevi_vektor;
@@ -373,6 +382,8 @@ string izracunaj(int ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<int>&
 //funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
 //i sve varijante operanada medju njima
 //verzija za double
+//povratna vrednost je "" ukoliko ne postoji resenje ili string izraza koji daje tacno resenje
+//ulazni argumenti su vektor brojeva koji se koriste i odgovarajuci kalkulator
 double dobijeni_broj_d = 0;
 string izracunaj_sve_zagrade_d(vector<double> dostupni_brojevi, Kalkulator<double>& k) {
 	int broj_operacija = dostupni_brojevi.size() + 1;
@@ -475,6 +486,8 @@ string izracunaj_sve_zagrade_d(vector<double> dostupni_brojevi, Kalkulator<doubl
 //funkcija koja od vektora sa brojevima koji se koriste proverava sve permutacije
 //i sve varijante operanada medju njima
 //verzija za double
+//povratna vrednost je "" ukoliko ne postoji resenje ili string izraza koji daje tacno resenje
+//ulazni argumenti su vektor brojeva koji se koriste i odgovarajuci kalkulator
 string izracunaj_sve_d(vector<double> dostupni_brojevi, Kalkulator<double>& k) {
 	int broj_operacija = dostupni_brojevi.size() - 1;
 	int min = 0;
@@ -517,6 +530,11 @@ string izracunaj_sve_d(vector<double> dostupni_brojevi, Kalkulator<double>& k) {
 	return "";
 }
 
+
+//funkcija koja generise sve kombinacije brojeva i salje ih funkcijama koje proveravaju sve kombinacije operacija
+//verzija za double
+//povratna vrednost je string izraza koji daje tacno resenje ili vrednost najblizu tacnom izrazu
+//ulazni argumenti su niz brojeva koji se koriste, string broja koji se trazi i odgovarajuci kalkulator
 string izracunaj_d(double ponudjeni_brojevi[6], string trazeni_broj, Kalkulator<double> & kalkulator) {
 	string resenje = "";
 	vector<double>dostupni_brojevi_vektor;

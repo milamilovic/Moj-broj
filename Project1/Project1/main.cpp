@@ -16,6 +16,8 @@
 using namespace std;
 
 //pomocna funkcija koja nam splituje string na delove po razmaku
+//ulazni argument je string koji se deli na delove po razmaku
+//povratna vrednost je vektor stringova koji su dobijeni deljenjem
 vector<string> split(string s)
 {
 	int start = 0;
@@ -31,7 +33,7 @@ vector<string> split(string s)
 	return words;
 }
 
-
+//main funkcija, ostvaruje komunikaciju sa igracima i poziva funkcije za izracunavanje
 int main() {
 	//upuststva za igrace
 	cout << "Dobro dosli u igru moj broj!" << endl;

@@ -40,14 +40,14 @@ Kalkulator<T>::Kalkulator(T broj, T brojici[6])
 	}
 };
 
-//izraz mora biti sacinjen iskljucivo iz brojeva, operanada +, - , * i / i zagrada
+//izraz 'stringic' mora biti sacinjen iskljucivo iz brojeva, operanada +, - , * i /, zagrada i eventualno tacke kod decimalnih brojeva
 //inace se vraca vrednost 999999999 koja oznacava nevalidan izraz
 template<typename T>
 T Kalkulator<T>::izracunaj_k(string stringic) {
 
 	//izbacujemo izraze koji sadrze nesto osim brojeva, operanada i zagrada
 	for (char c : stringic) {
-		if (c != '*'&&c != '/'&&c != '+'&&c != '-'&&c != '('&&c != ')'&&c != '0'&&c != '1'&&c != '2'&&c != '3'&&c != '4'&&c != '5'&&c != '6'&&c != '7'&&c != '8'&&c != '9'&&c != '.') {
+		if (c!='*' && c!='/' && c!='+' && c!='-' && c!='(' && c!=')' && c!='0' && c!='1' && c!='2' && c!='3' && c!='4' && c!='5' && c!='6' && c!='7' && c!='8' && c!='9' && c!='.') {
 			return 999999999;
 		}
 	}
